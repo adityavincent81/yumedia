@@ -1,11 +1,11 @@
 interface ProfileStatsProps {
+  username: string;
+
   postsCount: number;
 
   followersCount: number;
 
   followingCount: number;
-
-  onPostsClick?: () => void;
 
   onFollowersClick?: () => void;
 
@@ -16,17 +16,13 @@ export default function ProfileStats({
   postsCount,
   followersCount,
   followingCount,
-  onPostsClick,
   onFollowersClick,
   onFollowingClick,
 }: ProfileStatsProps) {
   return (
     <div className="flex items-center gap-6">
-      <button
-        type="button"
-        onClick={onPostsClick}
-        className="text-left"
-      >
+      {/* Posts */}
+      <div>
         <div className="font-semibold">
           {postsCount}
         </div>
@@ -34,12 +30,17 @@ export default function ProfileStats({
         <div className="text-sm text-muted-foreground">
           Posts
         </div>
-      </button>
+      </div>
 
+      {/* Followers */}
       <button
         type="button"
         onClick={onFollowersClick}
-        className="text-left"
+        className="
+          text-left
+          transition-opacity
+          hover:opacity-80
+        "
       >
         <div className="font-semibold">
           {followersCount}
@@ -50,10 +51,15 @@ export default function ProfileStats({
         </div>
       </button>
 
+      {/* Following */}
       <button
         type="button"
         onClick={onFollowingClick}
-        className="text-left"
+        className="
+          text-left
+          transition-opacity
+          hover:opacity-80
+        "
       >
         <div className="font-semibold">
           {followingCount}

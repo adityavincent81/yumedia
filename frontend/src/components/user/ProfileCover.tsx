@@ -15,7 +15,7 @@ export default function ProfileCover({
 }: ProfileCoverProps) {
   return (
     <div
-      className={`relative w-full overflow-hidden bg-muted ${className}`}
+      className={`relative w-full overflow-hidden ${className}`}
       style={{
         height,
       }}
@@ -30,10 +30,50 @@ export default function ProfileCover({
           sizes="100vw"
         />
       ) : (
-        <div className="flex h-full w-full items-center justify-center">
-          <span className="text-sm text-muted-foreground">
-            No Cover Image
-          </span>
+        <div
+          className="
+            h-full
+            w-full
+
+            bg-gradient-to-br
+            from-cyan-600/30
+            via-slate-900
+            to-orange-600/30
+          "
+        >
+          {/* Glow kiri */}
+          <div
+            className="
+              absolute
+              -left-20
+              -top-20
+
+              h-60
+              w-60
+
+              rounded-full
+              bg-cyan-500/20
+
+              blur-3xl
+            "
+          />
+
+          {/* Glow kanan */}
+          <div
+            className="
+              absolute
+              -bottom-20
+              -right-20
+
+              h-60
+              w-60
+
+              rounded-full
+              bg-orange-500/20
+
+              blur-3xl
+            "
+          />
         </div>
       )}
     </div>

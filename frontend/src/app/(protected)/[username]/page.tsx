@@ -13,13 +13,13 @@ import { useProfile } from "@/features/user/hooks/useProfile";
 import type { ProfileTab } from "@/features/user/constants/profile-tabs";
 
 export default function UserProfilePage() {
+  const [activeTab, setActiveTab] =
+    useState<ProfileTab>("posts");
+
   const params = useParams();
 
   const username =
     params.username as string;
-
-  const [activeTab, setActiveTab] =
-    useState<ProfileTab>("posts");
 
   const {
     data,
@@ -47,10 +47,7 @@ export default function UserProfilePage() {
 
   return (
     <div className="space-y-6">
-      <ProfileHeader
-        user={user}
-        isOwner={false}
-      />
+      <ProfileHeader user={user} />
 
       <ProfileTabs
         activeTab={activeTab}

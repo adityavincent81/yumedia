@@ -2,7 +2,10 @@
 
 import { useEffect } from "react";
 
-import { useRouter } from "next/navigation";
+import {
+  usePathname,
+  useRouter,
+} from "next/navigation";
 
 import MainLayout from "@/components/layout/MainLayout";
 
@@ -14,6 +17,8 @@ export default function ProtectedLayout({
   children: React.ReactNode;
 }) {
   const router = useRouter();
+
+  const pathname = usePathname();
 
   const {
     user,
@@ -35,7 +40,16 @@ export default function ProtectedLayout({
 
   if (!isInitialized) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#030712] text-white">
+      <div
+        className="
+          flex
+          min-h-screen
+          items-center
+          justify-center
+          bg-[#030712]
+          text-white
+        "
+      >
         Loading...
       </div>
     );
@@ -45,8 +59,16 @@ export default function ProtectedLayout({
     return null;
   }
 
+  const showRightSidebar =
+    !pathname.startsWith("/profile") &&
+    !pathname.startsWith("/accounts");
+
   return (
-    <MainLayout>
+    <MainLayout
+      showRightSidebar={
+        showRightSidebar
+      }
+    >
       {children}
     </MainLayout>
   );

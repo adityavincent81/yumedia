@@ -87,6 +87,70 @@ class UserRepository {
     );
   }
 
+  async incrementFollowersCount(
+    userId
+  ) {
+    return User.findByIdAndUpdate(
+      userId,
+      {
+        $inc: {
+          followersCount: 1,
+        },
+      },
+      {
+        new: false,
+      }
+    );
+  }
+
+  async decrementFollowersCount(
+    userId
+  ) {
+    return User.findByIdAndUpdate(
+      userId,
+      {
+        $inc: {
+          followersCount: -1,
+        },
+      },
+      {
+        new: false,
+      }
+    );
+  }
+
+  async incrementFollowingCount(
+    userId
+  ) {
+    return User.findByIdAndUpdate(
+      userId,
+      {
+        $inc: {
+          followingCount: 1,
+        },
+      },
+      {
+        new: false,
+      }
+    );
+  }
+
+  async decrementFollowingCount(
+    userId
+  ) {
+    return User.findByIdAndUpdate(
+      userId,
+      {
+        $inc: {
+          followingCount: -1,
+        },
+      },
+      {
+        new: false,
+      }
+    );
+  }
+
   async existsByUsername(
     username
   ) {

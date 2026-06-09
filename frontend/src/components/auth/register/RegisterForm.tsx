@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 
 import { useRouter } from "next/navigation";
@@ -12,12 +13,23 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { toast } from "sonner";
 
+import { Eye, EyeOff } from "lucide-react";
+import { useState } from "react";
+
+import {
+  Button,
+  Input,
+} from "@/components/ui";
+
 import { useRegister } from "@/features/auth/hooks/useRegister";
 
 const registerSchema = z.object({
   fullName: z
     .string()
-    .min(3, "Full name must be at least 3 characters"),
+    .min(
+      3,
+      "Full name must be at least 3 characters"
+    ),
 
   nim: z
     .string()
@@ -49,7 +61,9 @@ export default function RegisterForm() {
     handleSubmit,
     formState: { errors },
   } = useForm<RegisterFormValues>({
-    resolver: zodResolver(registerSchema),
+    resolver: zodResolver(
+      registerSchema
+    ),
   });
 
   const onSubmit = async (
@@ -59,7 +73,7 @@ export default function RegisterForm() {
       await mutateAsync(values);
 
       toast.success(
-        "Account created successfully. Please sifn in."
+        "Account created successfully."
       );
 
       router.push("/login");
@@ -71,175 +85,236 @@ export default function RegisterForm() {
     }
   };
 
+  const [showPassword, setShowPassword] =
+  useState(false);
+
   return (
     <div className="space-y-8">
-      <div>
-        <h2 className="text-3xl font-bold text-white">
-          Create Account
-        </h2>
+      {/* Logo */}
+      <div className="flex justify-center">
+        <Image
+          src="/assets/logo/UYP-Logo.png"
+          alt="Universitas Yudharta Pasuruan"
+          width={72}
+          height={72}
+          className="object-contain"
+        />
+      </div>
 
-        <p className="mt-2 text-sm text-gray-400">
-          Join Yumedia and connect
-          with your campus community.
+      {/* Header */}
+      <div className="text-center">
+        <h1
+          className="
+            text-3xl
+            font-bold
+            text-white
+          "
+        >
+          Join Yumedia
+        </h1>
+
+        <p
+          className="
+            mt-2
+            text-sm
+            text-zinc-400
+          "
+        >
+          Create your account and
+          start connecting with the
+          campus community.
         </p>
       </div>
 
+      {/* Form */}
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(
+          onSubmit
+        )}
         className="space-y-5"
       >
-        {/* Full Name */}
+        <Input
+          label="Full Name"
+          placeholder="Enter your full name"
+          error={
+            errors.fullName?.message
+          }
+          {...register("fullName")}
+        />
+
+        <Input
+          label="NIM"
+          placeholder="Enter your NIM"
+          error={errors.nim?.message}
+          {...register("nim")}
+        />
+
+        <Input
+          type="email"
+          label="Email"
+          placeholder="Enter your email"
+          error={
+            errors.email?.message
+          }
+          {...register("email")}
+        />
+
         <div>
-          <label className="mb-2 block text-sm font-medium text-gray-300">
-            Full Name
-          </label>
+  <label
+    className="
+      mb-2
+      block
+      text-sm
+      font-medium
+      text-zinc-300
+    "
+  >
+    Password
+  </label>
 
-          <input
-            type="text"
-            placeholder="Enter your full name"
-            {...register("fullName")}
-            className="
-              w-full
-              rounded-xl
-              border
-              border-white/10
-              bg-white/5
-              px-4
-              py-3
-              text-white
-              outline-none
-              transition
-              focus:border-cyan-500
-            "
-          />
+  <div className="relative">
+    <input
+      type={
+        showPassword
+          ? "text"
+          : "password"
+      }
+      placeholder="Create a password"
+      {...register("password")}
+      className="
+        w-full
 
-          {errors.fullName && (
-            <p className="mt-1 text-sm text-red-400">
-              {errors.fullName.message}
-            </p>
-          )}
-        </div>
+        rounded-xl
+        border
+        border-white/10
 
-        {/* NIM */}
-        <div>
-          <label className="mb-2 block text-sm font-medium text-gray-300">
-            NIM
-          </label>
+        bg-white/5
 
-          <input
-            type="text"
-            placeholder="Enter your NIM"
-            {...register("nim")}
-            className="
-              w-full
-              rounded-xl
-              border
-              border-white/10
-              bg-white/5
-              px-4
-              py-3
-              text-white
-              outline-none
-              transition
-              focus:border-cyan-500
-            "
-          />
+        px-4
+        py-3
+        pr-12
 
-          {errors.nim && (
-            <p className="mt-1 text-sm text-red-400">
-              {errors.nim.message}
-            </p>
-          )}
-        </div>
+        text-white
 
-        {/* Email */}
-        <div>
-          <label className="mb-2 block text-sm font-medium text-gray-300">
-            Email
-          </label>
+        outline-none
 
-          <input
-            type="email"
-            placeholder="Enter your email"
-            {...register("email")}
-            className="
-              w-full
-              rounded-xl
-              border
-              border-white/10
-              bg-white/5
-              px-4
-              py-3
-              text-white
-              outline-none
-              transition
-              focus:border-cyan-500
-            "
-          />
+        transition
 
-          {errors.email && (
-            <p className="mt-1 text-sm text-red-400">
-              {errors.email.message}
-            </p>
-          )}
-        </div>
+        focus:border-cyan-500
+      "
+    />
 
-        {/* Password */}
-        <div>
-          <label className="mb-2 block text-sm font-medium text-gray-300">
-            Password
-          </label>
+    <button
+      type="button"
+      onClick={() =>
+        setShowPassword(
+          !showPassword
+        )
+      }
+      className="
+        absolute
+        right-3
+        top-1/2
 
-          <input
-            type="password"
-            placeholder="Enter your password"
-            {...register("password")}
-            className="
-              w-full
-              rounded-xl
-              border
-              border-white/10
-              bg-white/5
-              px-4
-              py-3
-              text-white
-              outline-none
-              transition
-              focus:border-cyan-500
-            "
-          />
+        -translate-y-1/2
 
-          {errors.password && (
-            <p className="mt-1 text-sm text-red-400">
-              {errors.password.message}
-            </p>
-          )}
-        </div>
+        text-zinc-400
 
-        <button
+        transition
+
+        hover:text-white
+      "
+    >
+      {showPassword ? (
+        <EyeOff size={18} />
+      ) : (
+        <Eye size={18} />
+      )}
+    </button>
+  </div>
+
+  <div className="mt-1 flex justify-between">
+    <span
+      className="
+        text-xs
+        text-zinc-500
+      "
+    >
+      Minimum 8 characters
+    </span>
+
+    {errors.password && (
+      <span
+        className="
+          text-xs
+          text-red-400
+        "
+      >
+        {
+          errors.password
+            .message
+        }
+      </span>
+    )}
+  </div>
+</div>
+
+        <Button
           type="submit"
-          disabled={isPending}
-          className="
-            w-full
-            rounded-xl
-            bg-gradient-to-r
-            from-cyan-500
-            to-orange-500
-            py-3
-            font-semibold
-            text-white
-            transition
-            hover:opacity-90
-            disabled:opacity-50
-          "
+          loading={isPending}
+          fullWidth
+          size="lg"
         >
           {isPending
             ? "Creating Account..."
             : "Create Account"}
-        </button>
+        </Button>
       </form>
 
-      <div className="text-center text-sm text-gray-400">
+      {/* Terms */}
+      <p
+        className="
+          text-center
+          text-xs
+          leading-relaxed
+          text-zinc-500
+        "
+      >
+        By creating an account,
+        you agree to our Terms of
+        Service and Privacy Policy.
+      </p>
+
+      {/* Divider */}
+      <div className="relative">
+        <div className="absolute inset-0 flex items-center">
+          <div className="w-full border-t border-zinc-800" />
+        </div>
+
+        <div className="relative flex justify-center">
+          <span
+            className="
+              bg-[#0b1120]
+              px-4
+              text-xs
+              uppercase
+              tracking-wider
+              text-zinc-500
+            "
+          >
+            Student Registration
+          </span>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div
+        className="
+          text-center
+          text-sm
+          text-zinc-400
+        "
+      >
         Already have an account?{" "}
         <Link
           href="/login"

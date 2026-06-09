@@ -6,8 +6,10 @@ import MobileNavbar from "./MobileNavbar";
 
 export default function MainLayout({
   children,
+  showRightSidebar = true,
 }: {
   children: React.ReactNode;
+  showRightSidebar?: boolean;
 }) {
   return (
     <div className="min-h-screen bg-black text-white overflow-x-hidden">
@@ -36,7 +38,9 @@ export default function MainLayout({
           </main>
 
           {/* RIGHT SIDEBAR */}
-          <RightSidebar />
+          {showRightSidebar && (
+           <RightSidebar />
+          )}
         </div>
       </div>
 

@@ -1,14 +1,55 @@
 "use client";
 
 interface AuthContainerProps {
-  leftPanel: React.ReactNode;
-  rightPanel: React.ReactNode;
+  variant?: "login" | "register";
+  formPanel: React.ReactNode;
+  brandingPanel: React.ReactNode;
 }
 
 export default function AuthContainer({
-  leftPanel,
-  rightPanel,
+  variant = "login",
+  formPanel,
+  brandingPanel,
 }: AuthContainerProps) {
+  const isLogin = variant === "login";
+
+  const FormSection = (
+    <section className="w-full lg:w-1/2">
+      <div
+        className="
+          mx-auto
+          w-full
+          max-w-md
+
+          rounded-3xl
+          border
+          border-white/10
+
+          bg-white/5
+          p-8
+
+          backdrop-blur-xl
+          shadow-2xl
+        "
+      >
+        {formPanel}
+      </div>
+    </section>
+  );
+
+  const BrandingSection = (
+    <section
+      className="
+        hidden
+        lg:flex
+        lg:w-1/2
+        items-center
+      "
+    >
+      {brandingPanel}
+    </section>
+  );
+
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#030712]">
       {/* Background Grid */}
@@ -49,55 +90,43 @@ export default function AuthContainer({
         "
       />
 
-      {/* Content */}
-      <div className="relative z-10 flex min-h-screen">
-        {/* Left Side */}
-        <section
-          className="
-            hidden
-            lg:flex
-            lg:w-1/2
-            items-center
-            justify-center
-            px-12
-          "
-        >
-          <div className="w-full max-w-xl">
-            {leftPanel}
-          </div>
-        </section>
-
-        {/* Right Side */}
-        <section
+      <div
+        className="
+          relative
+          z-10
+          mx-auto
+          flex
+          min-h-screen
+          max-w-full
+          items-center
+          px-6
+          lg:px-10
+        "
+      >
+        <div
           className="
             flex
             w-full
-            lg:w-1/2
+            flex-col
             items-center
-            justify-center
-            px-6
-            py-10
+            gap-16
+            lg:flex-row
           "
         >
-          <div
-            className="
-              w-full
-              max-w-md
-
-              rounded-3xl
-              border
-              border-white/10
-
-              bg-white/5
-              backdrop-blur-xl
-
-              p-8
-              shadow-2xl
-            "
-          >
-            {rightPanel}
-          </div>
-        </section>
+          {isLogin ? (
+            <>
+              {/* LOGIN */}
+              {BrandingSection}
+              {FormSection}
+            </>
+          ) : (
+            <>
+              {/* REGISTER */}
+              {FormSection}
+              {BrandingSection}
+            </>
+          )}
+        </div>
       </div>
     </main>
   );

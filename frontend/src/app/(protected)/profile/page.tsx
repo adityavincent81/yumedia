@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+import { useRouter } from "next/navigation";
+
 import ProfileAbout from "@/components/user/ProfileAbout";
 import ProfileHeader from "@/components/user/ProfileHeader";
 import ProfileTabs from "@/components/user/ProfileTabs";
@@ -11,6 +13,8 @@ import { useMyProfile } from "@/features/user/hooks/useMyProfile";
 import type { ProfileTab } from "@/features/user/constants/profile-tabs";
 
 export default function ProfilePage() {
+  const router = useRouter();
+
   const [activeTab, setActiveTab] =
     useState<ProfileTab>("posts");
 
@@ -43,6 +47,9 @@ export default function ProfilePage() {
       <ProfileHeader
         user={user}
         isOwner
+        onEditProfile={() =>
+          router.push("/accounts/edit")
+        }
       />
 
       <ProfileTabs

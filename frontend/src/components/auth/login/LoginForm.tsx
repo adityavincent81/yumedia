@@ -7,9 +7,21 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 import { z } from "zod";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { toast } from "sonner";
+
+import { Button } from "@/components/ui";
+import { Input } from "@/components/ui";
+
+import Image from "next/image";
+import { useState } from "react";
+
+import {
+  Eye,
+  EyeOff,
+} from "lucide-react";
 
 import { useLogin } from "@/features/auth/hooks/useLogin";
 
@@ -59,17 +71,44 @@ export default function LoginForm() {
     }
   };
 
+  const [showPassword, setShowPassword] =
+  useState(false);
+
   return (
     <div className="space-y-8">
-      {/* Header */}
-      <div>
-        <h2 className="text-3xl font-bold text-white">
-          Sign In
-        </h2>
+      {/* Logo */}
+      <div className="flex justify-center">
+  <Image
+    src="/assets/logo/UYP-Logo.png"
+    alt="Universitas Yudharta Pasuruan"
+    width={72}
+    height={72}
+    className="object-contain"
+  />
+</div>
 
-        <p className="mt-2 text-sm text-gray-400">
-          Welcome back to Yumedia.
-        </p>
+      {/* Header */}
+      <div className="text-center">
+        <h1
+          className="
+            text-3xl
+            font-bold
+            text-white
+          "
+        >
+          Welcome Back
+        </h1>
+
+        <p
+  className="
+    mt-2
+    text-sm
+    text-zinc-400
+  "
+>
+  Access your account and
+  continue your campus journey.
+</p>
       </div>
 
       {/* Form */}
@@ -77,78 +116,121 @@ export default function LoginForm() {
         onSubmit={handleSubmit(onSubmit)}
         className="space-y-5"
       >
-        {/* NIM */}
+        <Input
+          label="NIM"
+          placeholder="Enter your NIM"
+          error={errors.nim?.message}
+          {...register("nim")}
+        />
+
         <div>
-          <label className="mb-2 block text-sm font-medium text-gray-300">
-            NIM
-          </label>
+  <label
+    className="
+      mb-2
+      block
+      text-sm
+      font-medium
+      text-zinc-300
+    "
+  >
+    Password
+  </label>
 
-          <input
-            type="text"
-            placeholder="Enter your NIM"
-            {...register("nim")}
-            className="
-              w-full
-              rounded-xl
-              border
-              border-white/10
-              bg-white/5
-              px-4
-              py-3
-              text-white
-              outline-none
-              transition
-              focus:border-cyan-500
-            "
-          />
+  <div className="relative">
+    <input
+      type={
+        showPassword
+          ? "text"
+          : "password"
+      }
+      placeholder="Enter your password"
+      {...register("password")}
+      className="
+        w-full
 
-          {errors.nim && (
-            <p className="mt-1 text-sm text-red-400">
-              {errors.nim.message}
-            </p>
-          )}
-        </div>
+        rounded-xl
+        border
+        border-white/10
 
-        {/* Password */}
-        <div>
-          <label className="mb-2 block text-sm font-medium text-gray-300">
-            Password
-          </label>
+        bg-white/5
 
-          <input
-            type="password"
-            placeholder="Enter your password"
-            {...register("password")}
-            className="
-              w-full
-              rounded-xl
-              border
-              border-white/10
-              bg-white/5
-              px-4
-              py-3
-              text-white
-              outline-none
-              transition
-              focus:border-cyan-500
-            "
-          />
+        px-4
+        py-3
+        pr-12
 
-          {errors.password && (
-            <p className="mt-1 text-sm text-red-400">
-              {errors.password.message}
-            </p>
-          )}
-        </div>
+        text-white
 
-        {/* Forgot Password */}
+        outline-none
+
+        transition
+
+        focus:border-cyan-500
+      "
+    />
+
+    <button
+      type="button"
+      onClick={() =>
+        setShowPassword(
+          !showPassword
+        )
+      }
+      className="
+        absolute
+        right-3
+        top-1/2
+
+        -translate-y-1/2
+
+        text-zinc-400
+
+        transition
+
+        hover:text-white
+      "
+    >
+      {showPassword ? (
+        <EyeOff size={18} />
+      ) : (
+        <Eye size={18} />
+      )}
+    </button>
+  </div>
+
+  <div className="mt-1 flex justify-between">
+    <span
+      className="
+        text-xs
+        text-zinc-500
+      "
+    >
+      Enter your account password
+    </span>
+
+    {errors.password && (
+      <span
+        className="
+          text-xs
+          text-red-400
+        "
+      >
+        {
+          errors.password
+            .message
+        }
+      </span>
+    )}
+  </div>
+</div>
+
         <div className="flex justify-end">
           <button
             type="button"
             className="
               text-sm
               text-cyan-400
-              transition
+              transition-all
+              duration-200
               hover:text-cyan-300
             "
           >
@@ -156,38 +238,55 @@ export default function LoginForm() {
           </button>
         </div>
 
-        {/* Submit */}
-        <button
+        <Button
           type="submit"
-          disabled={isPending}
-          className="
-            w-full
-            rounded-xl
-            bg-gradient-to-r
-            from-cyan-500
-            to-orange-500
-            py-3
-            font-semibold
-            text-white
-            transition
-            hover:opacity-90
-            disabled:opacity-50
-          "
+          loading={isPending}
+          fullWidth
+          size="lg"
         >
           {isPending
             ? "Signing In..."
             : "Sign In"}
-        </button>
+        </Button>
       </form>
 
+      {/* Divider */}
+      <div className="relative">
+        <div className="absolute inset-0 flex items-center">
+          <div className="w-full border-t border-zinc-800" />
+        </div>
+
+        <div className="relative flex justify-center">
+          <span
+            className="
+              bg-[#0b1120]
+              px-4
+              text-xs
+              uppercase
+              tracking-wider
+              text-zinc-500
+            "
+          >
+            Campus Access
+          </span>
+        </div>
+      </div>
+
       {/* Footer */}
-      <div className="text-center text-sm text-gray-400">
+      <div
+        className="
+          text-center
+          text-sm
+          text-zinc-400
+        "
+      >
         Don't have an account?{" "}
         <Link
           href="/register"
           className="
             font-medium
             text-cyan-400
+            transition-colors
             hover:text-cyan-300
           "
         >
