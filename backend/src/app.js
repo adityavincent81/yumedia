@@ -8,7 +8,9 @@ const authRoutes = require("./routes/auth.routes");
 const userRoutes = require("./routes/user.routes");
 const followRoutes = require("./routes/follow.routes");
 const postRoutes = require("./routes/post.routes");
-
+const feedRoutes = require("./routes/feed.routes");
+const likeRoutes = require("./routes/like.routes");
+const commentRoutes = require("./routes/comment.routes");
 
 const errorMiddleware = require("./middleware/error.middleware");
 
@@ -39,6 +41,9 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/follows", followRoutes);
 app.use("/api/posts", postRoutes);
+app.use("/api/feed",feedRoutes);
+app.use("/api/likes",likeRoutes);
+app.use("/api/comments",commentRoutes);
 
 app.use(errorMiddleware);
 

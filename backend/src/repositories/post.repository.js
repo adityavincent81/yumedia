@@ -27,26 +27,112 @@ const findByAuthor = (
     );
 };
 
-const updateById = (postId, data) => {
-  return Post.findByIdAndUpdate(postId, data, {
-    new: true,
-    runValidators: true,
+const updateById = (
+  postId,
+  data
+) => {
+  return Post.findByIdAndUpdate(
+    postId,
+    data,
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+};
+
+const deleteById = (
+  postId
+) => {
+  return Post.findByIdAndDelete(
+    postId
+  );
+};
+
+const existsById = (
+  postId
+) => {
+  return Post.exists({
+    _id: postId,
   });
 };
 
-const deleteById = (postId) => {
-  return Post.findByIdAndDelete(postId);
+/**
+ * Like Counter
+ */
+const incrementLikesCount = (
+  postId
+) => {
+  return Post.findByIdAndUpdate(
+    postId,
+    {
+      $inc: {
+        likesCount: 1,
+      },
+    }
+  );
 };
 
-const existsById = (postId) => {
-  return Post.exists({ _id: postId });
+const decrementLikesCount = (
+  postId
+) => {
+  return Post.findByIdAndUpdate(
+    postId,
+    {
+      $inc: {
+        likesCount: -1,
+      },
+    }
+  );
+};
+
+/**
+ * Comment Counter
+ */
+const incrementCommentsCount = (
+  postId
+) => {
+  return Post.findByIdAndUpdate(
+    postId,
+    {
+      $inc: {
+        commentsCount: 1,
+      },
+    }
+  );
+};
+
+const decrementCommentsCount = (
+  postId
+) => {
+  return Post.findByIdAndUpdate(
+    postId,
+    {
+      $inc: {
+        commentsCount: -1,
+      },
+    }
+  );
 };
 
 module.exports = {
   create,
+
   findById,
+
   findByAuthor,
+
   updateById,
+
   deleteById,
+
   existsById,
+
+  incrementLikesCount,
+
+  decrementLikesCount,
+
+  incrementCommentsCount,
+
+  decrementCommentsCount,
 };

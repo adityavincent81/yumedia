@@ -12,7 +12,7 @@ interface ModalProps {
 
   children: ReactNode;
 
-  size?: "sm" | "md" | "lg" | "xl";
+  size?: "sm" | "md" | "lg" | "xl" | "xxl";
 
   closeOnOverlayClick?: boolean;
 }
@@ -65,6 +65,8 @@ export default function Modal({
     lg: "max-w-2xl",
 
     xl: "max-w-4xl",
+
+    xxl: "max-w-7xl",
   };
 
   return createPortal(

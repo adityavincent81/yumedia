@@ -6,15 +6,11 @@ import { useAuthStore } from "@/features/auth/store/auth.store";
 
 import { usePostStore } from "@/features/post/store/post.store";
 
-import { useUserPosts } from "@/features/post/hooks/useUserPosts";
-
 import CreatePostModal from "@/components/post/CreatePostModal";
 
-import PostCard from "@/components/post/PostCard";
+import PostDetailModal from "@/components/post/PostDetailModal";
 
-import PostSkeleton from "@/components/post/PostSkeleton";
-
-import EmptyState from "@/components/ui/EmptyState";
+import FeedList from "@/components/feed/FeedList";
 
 export default function DashboardPage() {
   const user = useAuthStore(
@@ -26,16 +22,6 @@ export default function DashboardPage() {
       (state) =>
         state.openCreatePost
     );
-
-  const {
-    data: posts = [],
-    isLoading,
-  } = useUserPosts({
-    username:
-      user?.username || "",
-    enabled:
-      !!user?.username,
-  });
 
   return (
     <>
@@ -89,32 +75,15 @@ export default function DashboardPage() {
             </button>
           </div>
 
-          {/* Feed */}
+          <PostDetailModal />
+
+          {/* Home Feed */}
           <section className="space-y-4">
             <h2 className="text-xl font-semibold">
-              Your Posts
+              Home Feed
             </h2>
 
-            {isLoading ? (
-              <PostSkeleton
-                count={3}
-              />
-            ) : posts.length ===
-              0 ? (
-              <EmptyState
-                title="No Posts Yet"
-                description="Create your first post and start sharing with the community."
-              />
-            ) : (
-              posts.map(
-                (post) => (
-                  <PostCard
-                    key={post._id}
-                    post={post}
-                  />
-                )
-              )
-            )}
+            <FeedList />
           </section>
         </div>
       </main>

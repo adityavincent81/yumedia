@@ -1,5 +1,13 @@
 "use client";
 
+import {
+  Heart,
+  MessageCircle,
+  Share2,
+  Bookmark,
+  Loader2,
+} from "lucide-react";
+
 interface PostActionsProps {
   likesCount?: number;
 
@@ -7,15 +15,21 @@ interface PostActionsProps {
 
   savesCount?: number;
 
+  sharesCount?: number;
+
   isLiked?: boolean;
 
   isSaved?: boolean;
+
+  isLikeLoading?: boolean;
 
   onLike?: () => void;
 
   onComment?: () => void;
 
   onSave?: () => void;
+
+  onShare?: () => void;
 }
 
 export default function PostActions({
@@ -25,15 +39,21 @@ export default function PostActions({
 
   savesCount = 0,
 
+  sharesCount = 0,
+
   isLiked = false,
 
   isSaved = false,
+
+  isLikeLoading = false,
 
   onLike,
 
   onComment,
 
   onSave,
+
+  onShare,
 }: PostActionsProps) {
   return (
     <div
@@ -47,74 +67,174 @@ export default function PostActions({
         className="
           flex
           items-center
-          gap-4
+          gap-6
         "
       >
+        {/* LIKE */}
         <button
           type="button"
+          disabled={isLikeLoading}
           onClick={onLike}
           className="
+            group
             flex
             items-center
             gap-2
+
             text-sm
-            text-zinc-300
-            transition
-            hover:text-white
+
+            transition-all
+
+            hover:scale-105
+
+            disabled:cursor-not-allowed
+            disabled:opacity-70
           "
         >
-          <span>
-            {isLiked
-              ? "❤️"
-              : "🤍"}
-          </span>
+          {isLikeLoading ? (
+            <Loader2
+              size={20}
+              className="
+                animate-spin
+                text-zinc-400
+              "
+            />
+          ) : (
+            <Heart
+              size={20}
+              className={
+                isLiked
+                  ? `
+                    fill-red-500
+                    text-red-500
+                  `
+                  : `
+                    text-zinc-400
+                    transition-colors
+                    group-hover:text-red-500
+                  `
+              }
+            />
+          )}
 
-          <span>
+          <span
+            className="
+              text-zinc-300
+            "
+          >
             {likesCount}
           </span>
         </button>
 
+        {/* COMMENT */}
         <button
           type="button"
           onClick={onComment}
           className="
+            group
             flex
             items-center
             gap-2
+
             text-sm
-            text-zinc-300
-            transition
-            hover:text-white
+
+            transition-all
+
+            hover:scale-105
           "
         >
-          <span>💬</span>
+          <MessageCircle
+            size={20}
+            className="
+              text-zinc-400
+              transition-colors
+              group-hover:text-blue-500
+            "
+          />
 
-          <span>
+          <span
+            className="
+              text-zinc-300
+            "
+          >
             {commentsCount}
+          </span>
+        </button>
+
+        {/* SHARE */}
+        <button
+          type="button"
+          onClick={onShare}
+          className="
+            group
+            flex
+            items-center
+            gap-2
+
+            text-sm
+
+            transition-all
+
+            hover:scale-105
+          "
+        >
+          <Share2
+            size={20}
+            className="
+              text-zinc-400
+              transition-colors
+              group-hover:text-green-500
+            "
+          />
+
+          <span
+            className="
+              text-zinc-300
+            "
+          >
+            {sharesCount}
           </span>
         </button>
       </div>
 
+      {/* SAVE */}
       <button
         type="button"
         onClick={onSave}
         className="
+          group
           flex
           items-center
           gap-2
+
           text-sm
-          text-zinc-300
-          transition
-          hover:text-white
+
+          transition-all
+
+          hover:scale-105
         "
       >
-        <span>
-          {isSaved
-            ? "🔖"
-            : "📑"}
-        </span>
+        <Bookmark
+          size={20}
+          className={
+            isSaved
+              ? `
+                fill-white
+                text-white
+              `
+              : `
+                text-zinc-400
+                transition-colors
+                group-hover:text-yellow-500
+              `
+          }
+        />
 
-        <span>
+        <span
+          className="
+            text-zinc-300
+          "
+        >
           {savesCount}
         </span>
       </button>

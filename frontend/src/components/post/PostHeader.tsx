@@ -34,6 +34,12 @@ export default function PostHeader({
       }
     );
 
+  const avatarSrc =
+    typeof author.avatar ===
+    "string"
+      ? author.avatar
+      : author.avatar?.url;
+
   return (
     <div
       className="
@@ -51,8 +57,9 @@ export default function PostHeader({
       >
         <Avatar
           src={
-            author.avatar ??
-            undefined
+            avatarSrc?.trim()
+              ? avatarSrc
+              : undefined
           }
           alt={
             author.username

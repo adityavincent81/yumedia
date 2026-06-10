@@ -3,7 +3,6 @@
 import ClassInfoCard from "./cards/ClassInfoCard";
 import AccountAndFriendsCard from "./cards/AccountAndFriendsCard";
 import ScheduleCard from "./cards/ScheduleCard";
-import InfoCard from "./cards/InfoCard";
 
 export default function RightSidebar() {
   return (
@@ -22,7 +21,6 @@ export default function RightSidebar() {
 
         <ScheduleCard />
 
-        <InfoCard />
       </div>
     </aside>
   );
