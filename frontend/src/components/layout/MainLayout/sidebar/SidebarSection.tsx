@@ -5,14 +5,20 @@ import SidebarItem from "../SidebarItem";
 import type { LucideIcon } from "lucide-react";
 
 interface SidebarMenuItem {
-  href: string;
   label: string;
+
   icon: LucideIcon;
+
+  href?: string;
+
+  action?: string;
 }
 
 interface SidebarSectionProps {
   title: string;
+
   items: SidebarMenuItem[];
+
   pathname: string;
 }
 
@@ -53,27 +59,17 @@ export default function SidebarSection({
 
       {/* Items */}
       <div className="space-y-1">
-        {items.map(
-          ({
-            href,
-            label,
-            icon,
-          }) => (
-            <SidebarItem
-              key={href}
-              href={href}
-              label={label}
-              icon={icon}
-              active={
-                href === "/"
-                  ? pathname === "/"
-                  : pathname.startsWith(
-                      href
-                    )
-              }
-            />
-          )
-        )}
+        {items.map((item) => (
+          <SidebarItem
+            key={
+              item.href ??
+              item.action ??
+              item.label
+            }
+            item={item}
+            pathname={pathname}
+          />
+        ))}
       </div>
     </div>
   );

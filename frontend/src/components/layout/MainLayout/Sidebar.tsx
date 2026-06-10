@@ -19,6 +19,10 @@ import {
 
 import { useAuthStore } from "@/features/auth/store/auth.store";
 
+import CreatePostModal from "@/components/post/CreatePostModal";
+
+import { usePostStore } from "@/features/post/store/post.store";
+
 export default function Sidebar() {
   const pathname = usePathname();
 
@@ -29,8 +33,16 @@ export default function Sidebar() {
     (state) => state.user
   );
 
+  const openCreatePost =
+    usePostStore(
+      (state) =>
+        state.openCreatePost
+    );
+
   return (
     <>
+      <CreatePostModal />
+
       {/* Global Overlay */}
       {isMoreOpen && (
         <button
@@ -85,7 +97,6 @@ export default function Sidebar() {
           `}
         >
           <div className="flex min-h-full flex-col">
-            {/* USER */}
             <SidebarUser
               fullName={
                 user?.fullName
@@ -98,7 +109,6 @@ export default function Sidebar() {
               }
             />
 
-            {/* NAVIGATION */}
             <div className="p-2">
               <SidebarSection
                 title="Navigation"
@@ -111,7 +121,6 @@ export default function Sidebar() {
               />
             </div>
 
-            {/* UTILITY */}
             <div
               className="
                 border-t
@@ -131,7 +140,6 @@ export default function Sidebar() {
               />
             </div>
 
-            {/* MORE */}
             <div
               className="
                 mt-auto
@@ -186,13 +194,12 @@ export default function Sidebar() {
                 />
 
                 <SidebarItem
-                  href="/about"
-                  label="Info"
-                  icon={Info}
-                  active={
-                    pathname ===
-                    "/about"
-                  }
+                  pathname={pathname}
+                  item={{
+                  href: "/about",
+                  label: "Info",
+                  icon: Info,
+  }}
                 />
               </div>
             </div>

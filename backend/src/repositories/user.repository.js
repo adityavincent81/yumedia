@@ -151,6 +151,38 @@ class UserRepository {
     );
   }
 
+  async incrementPostsCount(
+  userId
+) {
+  return User.findByIdAndUpdate(
+    userId,
+    {
+      $inc: {
+        postsCount: 1,
+      },
+    },
+    {
+      new: false,
+    }
+  );
+}
+
+async decrementPostsCount(
+  userId
+) {
+  return User.findByIdAndUpdate(
+    userId,
+    {
+      $inc: {
+        postsCount: -1,
+      },
+    },
+    {
+      new: false,
+    }
+  );
+}
+
   async existsByUsername(
     username
   ) {

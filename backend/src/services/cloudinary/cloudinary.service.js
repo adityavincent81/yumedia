@@ -3,9 +3,10 @@ const streamifier = require("streamifier");
 const cloudinary = require("../../config/cloudinary");
 
 class CloudinaryService {
-  async uploadImage(
+  async uploadMedia(
     fileBuffer,
-    folder
+    folder,
+    resourceType = "auto"
   ) {
     return new Promise(
       (resolve, reject) => {
@@ -13,7 +14,8 @@ class CloudinaryService {
           cloudinary.uploader.upload_stream(
             {
               folder,
-              resource_type: "image",
+              resource_type:
+                resourceType,
             },
             (error, result) => {
               if (error) {
@@ -26,6 +28,9 @@ class CloudinaryService {
 
                 url:
                   result.secure_url,
+
+                resourceType:
+                  result.resource_type,
               });
             }
           );
@@ -39,13 +44,38 @@ class CloudinaryService {
     );
   }
 
-  async deleteImage(publicId) {
+  async uploadImage(
+    fileBuffer,
+    folder
+  ) {
+    return this.uploadMedia(
+      fileBuffer,
+      folder,
+      "image"
+    );
+  }
+
+  async deleteMedia(
+    publicId,
+    resourceType = "image"
+  ) {
     if (!publicId) {
       return;
     }
 
     return cloudinary.uploader.destroy(
-      publicId
+      publicId,
+      {
+        resource_type:
+          resourceType,
+      }
+    );
+  }
+
+  async deleteImage(publicId) {
+    return this.deleteMedia(
+      publicId,
+      "image"
     );
   }
 }

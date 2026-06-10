@@ -21,16 +21,24 @@ import {
 } from "lucide-react";
 
 export interface SidebarMenuItem {
-  href: string;
   label: string;
+
   icon: LucideIcon;
+
+  href?: string;
+
+  action?: string;
 }
 
 export interface SidebarMoreMenuItem {
   label: string;
+
   icon: LucideIcon;
+
   href?: string;
+
   action?: string;
+
   danger?: boolean;
 }
 
@@ -41,26 +49,31 @@ export const navigationItems: SidebarMenuItem[] =
       label: "Home",
       icon: Home,
     },
+
     {
       href: "/videos",
       label: "Videos",
       icon: PlaySquare,
     },
+
     {
       href: "/explore",
       label: "Explore",
       icon: Compass,
     },
+
     {
-      href: "/create",
       label: "Create",
       icon: SquarePen,
+      action: "create-post",
     },
+
     {
       href: "/notifications",
       label: "Notifications",
       icon: Bell,
     },
+
     {
       href: "/collections",
       label: "Collections",
@@ -75,11 +88,13 @@ export const utilityItems: SidebarMenuItem[] =
       label: "Messages",
       icon: MessageCircle,
     },
+
     {
       href: "/communities",
       label: "Communities",
       icon: Users,
     },
+
     {
       href: "/profile",
       label: "Profile",
@@ -89,15 +104,15 @@ export const utilityItems: SidebarMenuItem[] =
 
 /**
  * Sidebar Item
- * Klik -> buka modal
  */
 export const moreItems: SidebarMenuItem[] =
   [
     {
-      href: "#",
+      action: "more",
       label: "More",
       icon: MoreHorizontal,
     },
+
     {
       href: "/about",
       label: "Info",
@@ -106,7 +121,7 @@ export const moreItems: SidebarMenuItem[] =
   ];
 
 /**
- * Modal Content
+ * More Modal Content
  */
 export const moreModalSections = [
   {
