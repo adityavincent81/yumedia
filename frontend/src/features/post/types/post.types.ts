@@ -46,6 +46,8 @@ export interface Post {
 
   savesCount: number;
 
+  isSaved?: boolean;
+
   createdAt: string;
 
   updatedAt: string;

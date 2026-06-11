@@ -14,6 +14,7 @@ import PostMenu from "./PostMenu";
 
 import EditPostModal from "./EditPostModal";
 import DeletePostModal from "./DeletePostModal";
+import CollectionSelector from "@/components/collection/CollectionSelector";
 
 import { useAuthStore } from "@/features/auth/store/auth.store";
 import { useCommentStore } from "@/features/comment/store/comment.store";
@@ -97,6 +98,9 @@ export default function PostCard({
     useState(false);
 
   const [deleteOpen, setDeleteOpen] =
+    useState(false);
+
+    const [collectionOpen,setCollectionOpen,] = 
     useState(false);
 
   const [likesCount, setLikesCount] =
@@ -280,6 +284,10 @@ export default function PostCard({
               savesCount={
                 post.savesCount
               }
+              isSaved={
+                post.isSaved
+
+              }
               sharesCount={0}
               isLiked={liked}
               isLikeLoading={
@@ -297,11 +305,13 @@ export default function PostCard({
                   post
                 );
               }}
-              onSave={() =>
-                onSave?.(
-                  post
-                )
-              }
+              onSave={() => {
+                setCollectionOpen(
+                  true
+                );
+
+                onSave?.(post);
+              }}
               onShare={() =>
                 navigator.clipboard.writeText(
                   `${window.location.origin}/posts/${post._id}`
@@ -331,6 +341,14 @@ export default function PostCard({
           />
         </>
       )}
+      <CollectionSelector
+            isOpen={collectionOpen}
+            postId={post._id}
+            onClose={() =>
+              setCollectionOpen(false)
+            }
+          />
+          
     </>
   );
 }

@@ -73,6 +73,7 @@ export default function PostActions({
         {/* LIKE */}
         <button
           type="button"
+          aria-label="Like post"
           disabled={isLikeLoading}
           onClick={onLike}
           className="
@@ -129,6 +130,7 @@ export default function PostActions({
         {/* COMMENT */}
         <button
           type="button"
+          aria-label="Open comments"
           onClick={onComment}
           className="
             group
@@ -164,6 +166,7 @@ export default function PostActions({
         {/* SHARE */}
         <button
           type="button"
+          aria-label="Share post"
           onClick={onShare}
           className="
             group
@@ -197,9 +200,10 @@ export default function PostActions({
         </button>
       </div>
 
-      {/* SAVE */}
+      {/* SAVE / COLLECTION */}
       <button
         type="button"
+        aria-label="Save to collection"
         onClick={onSave}
         className="
           group
@@ -219,8 +223,8 @@ export default function PostActions({
           className={
             isSaved
               ? `
-                fill-white
-                text-white
+                fill-yellow-500
+                text-yellow-500
               `
               : `
                 text-zinc-400

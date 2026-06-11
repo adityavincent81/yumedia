@@ -6,6 +6,10 @@ const followRepository = require(
   "../../repositories/follow.repository"
 );
 
+const collectionPostRepository = require(
+  "../../repositories/collectionPost.repository"
+);
+
 const getFeed = async (
   userId,
   page = 1,
@@ -69,27 +73,53 @@ const getFeed = async (
       return false;
     });
 
-  const total =
-    await feedRepository.countFeedPosts(
-      authorIds
-    );
+  const enrichedPosts =
+  await Promise.all(
+    visiblePosts.map(
+      async (post) => {
+        const savesCount =
+          await collectionPostRepository.countByPost(
+            post._id
+          );
 
-  return {
-    posts: visiblePosts,
+        const isSaved =
+          await collectionPostRepository.existsByOwnerAndPost(
+            userId,
+            post._id
+          );
 
-    pagination: {
-      page,
+        return {
+          ...post.toObject(),
 
-      limit,
+          savesCount,
 
-      total,
+          isSaved,
+        };
+      }
+    )
+  );
 
-      totalPages:
-        Math.ceil(
-          total / limit
-        ),
-    },
-  };
+const total =
+  await feedRepository.countFeedPosts(
+    authorIds
+  );
+
+return {
+  posts: enrichedPosts,
+
+  pagination: {
+    page,
+
+    limit,
+
+    total,
+
+    totalPages:
+      Math.ceil(
+        total / limit
+      ),
+  },
+};
 };
 
 module.exports = {
