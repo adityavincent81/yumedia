@@ -1,7 +1,6 @@
 const multer = require("multer");
 
-const storage =
-  multer.memoryStorage();
+const storage = multer.memoryStorage();
 
 const imageFilter = (
   req,
@@ -41,7 +40,6 @@ const mediaFilter = (
     "image/jpg",
     "image/png",
     "image/webp",
-
     "video/mp4",
     "video/webm",
     "video/quicktime",
@@ -87,8 +85,17 @@ const postUpload = multer({
   },
 });
 
+const storyUpload = multer({
+  storage,
+  fileFilter: mediaFilter,
+  limits: {
+    fileSize: 100 * 1024 * 1024,
+  },
+});
+
 module.exports = {
   avatarUpload,
   coverUpload,
   postUpload,
+  storyUpload,
 };
