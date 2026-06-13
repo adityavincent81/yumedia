@@ -13,7 +13,7 @@ const likeRoutes = require("./routes/like.routes");
 const commentRoutes = require("./routes/comment.routes");
 const collectionRoutes = require("./routes/collection.routes");
 const storyRoutes = require("./routes/story.routes");
-const messageRoutes = require("./message.routes");
+const messageRoutes = require("./routes/message.routes");
 
 const errorMiddleware = require("./middleware/error.middleware");
 
@@ -25,14 +25,6 @@ app.use(
     credentials: true,
   })
 );
-
-const {
-  initializeSockets,
-} = require(
-  "./src/sockets"
-);
-
-initializeSockets(io);
 
 app.use(helmet());
 app.use(compression());
@@ -57,7 +49,7 @@ app.use("/api/likes",likeRoutes);
 app.use("/api/comments",commentRoutes);
 app.use("/api/collections",collectionRoutes);
 app.use("/api/stories",storyRoutes);
-router.use("/messages",messageRoutes);
+app.use("/api/messages",messageRoutes);
 
 app.use(errorMiddleware);
 

@@ -96,7 +96,7 @@ export const utilityItems: SidebarMenuItem[] =
     },
 
     {
-      href: "/profile",
+      action: "profile",
       label: "Profile",
       icon: User,
     },

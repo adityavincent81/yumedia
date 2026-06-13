@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import Avatar from "@/components/ui/Avatar";
 
 import type {
@@ -48,7 +50,8 @@ export default function PostHeader({
         justify-between
       "
     >
-      <div
+      <Link
+        href={`/${author.username}`}
         className="
           flex
           items-center
@@ -78,6 +81,7 @@ export default function PostHeader({
               className="
                 font-semibold
                 text-white
+                hover:underline
               "
             >
               {
@@ -115,7 +119,7 @@ export default function PostHeader({
             {formattedDate}
           </div>
         </div>
-      </div>
+      </Link>
 
       {showMenu && (
         <button

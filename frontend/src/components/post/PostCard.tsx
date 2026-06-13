@@ -62,6 +62,7 @@ export default function PostCard({
     useAuthStore(
       (state) => state.user
     );
+    
 
   const {
     likedPosts,

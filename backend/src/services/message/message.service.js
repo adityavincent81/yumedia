@@ -23,6 +23,14 @@ const AppError = require(
 );
 
 const {
+  emitNewMessage,
+
+  emitConversationUpdated,
+} = require(
+  "../../sockets/message.socket"
+);
+
+const {
   MESSAGE_TYPES,
 
   MESSAGE_ERRORS,
@@ -359,25 +367,51 @@ const sendMessage =
     }
 
     const message =
-      await messageRepository.create(
-        messageData
-      );
+  await messageRepository.create(
+    messageData
+  );
 
-    await conversationRepository.updateLastMessage(
-      conversationId,
-      {
-        messageId:
-          message._id,
+await conversationRepository.updateLastMessage(
+  conversationId,
+  {
+    messageId:
+      message._id,
 
-        senderId:
-          userId,
-      }
-    );
+    senderId:
+      userId,
+  }
+);
 
-    return messageRepository.findById(
-      message._id
-    );
-  };
+const populatedMessage =
+  await messageRepository.findById(
+    message._id
+  );
+
+const updatedConversation =
+  await conversationRepository.findById(
+    conversationId
+  );
+
+/**
+ * Realtime
+ */
+
+emitNewMessage(
+  populatedMessage
+);
+
+emitConversationUpdated({
+  conversationId,
+
+  conversation:
+    updatedConversation,
+
+  lastMessage:
+    populatedMessage,
+});
+
+return populatedMessage;
+};
 
 const getMessages =
   async (

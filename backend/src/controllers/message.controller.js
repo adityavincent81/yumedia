@@ -14,11 +14,21 @@ const createConversation =
   ) => {
     try {
       const userId =
-        req.user.id;
+        req.user.userId;
 
       const {
         participantId,
       } = req.body;
+
+      console.log(
+        "CREATE_CONVERSATION",
+        {
+          userId,
+          participantId,
+          body:
+            req.body,
+        }
+      );
 
       const conversation =
         await messageService.createConversation(
@@ -49,8 +59,12 @@ const getMyConversations =
     next
   ) => {
     try {
+      console.log(
+  "REQ USER",
+  req.user
+);
       const userId =
-        req.user.id;
+        req.user.userId;
 
       const page =
         Number(
@@ -87,7 +101,7 @@ const getConversationById =
   ) => {
     try {
       const userId =
-        req.user.id;
+        req.user.userId;
 
       const {
         conversationId,
@@ -120,9 +134,23 @@ const sendMessage =
     res,
     next
   ) => {
+    console.log(
+      "BODY",
+      req.body
+    );
+
+    console.log(
+      "FILE",
+      req.file
+    );
+
+    console.log(
+      "PARAMS",
+      req.params
+    );
     try {
       const userId =
-        req.user.id;
+        req.user.userId;
 
       const {
         conversationId,
@@ -160,7 +188,7 @@ const getMessages =
   ) => {
     try {
       const userId =
-        req.user.id;
+        req.user.userId;
 
       const {
         conversationId,
@@ -202,7 +230,7 @@ const markConversationRead =
   ) => {
     try {
       const userId =
-        req.user.id;
+        req.user.userId;
 
       const {
         conversationId,
@@ -232,7 +260,7 @@ const deleteMessageForMe =
   ) => {
     try {
       const userId =
-        req.user.id;
+        req.user.userId;
 
       const {
         messageId,

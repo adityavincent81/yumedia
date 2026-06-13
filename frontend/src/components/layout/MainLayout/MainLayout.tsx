@@ -1,46 +1,34 @@
 "use client";
 
 import Sidebar from "./Sidebar";
-import RightSidebar from "./RightSidebar";
 import MobileNavbar from "./MobileNavbar";
 
 export default function MainLayout({
   children,
-  showRightSidebar = true,
 }: {
   children: React.ReactNode;
-  showRightSidebar?: boolean;
 }) {
   return (
-    <div className="min-h-screen bg-black text-white overflow-x-hidden">
+    <div className="min-h-screen overflow-x-hidden bg-black text-white">
       {/* DESKTOP SIDEBAR */}
       <Sidebar />
 
       {/* MAIN CONTENT */}
       <div className="lg:pl-16">
-        <div className="mx-auto flex min-h-screen max-w-[1800px]">
-          
-          {/* FEED AREA */}
+        <div className="mx-auto min-h-screen max-w-[1800px]">
           <main
             className="
-              flex-1
               min-w-0
-              border-zinc-800
               px-4
               py-4
+              pb-24
               md:px-6
               lg:px-8
-              pb-24
               lg:pb-8
             "
           >
             {children}
           </main>
-
-          {/* RIGHT SIDEBAR */}
-          {showRightSidebar && (
-           <RightSidebar />
-          )}
         </div>
       </div>
 

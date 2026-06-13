@@ -2,6 +2,10 @@
 
 import { useState } from "react";
 
+import { useRouter } from "next/navigation";
+
+import { MessageCircle } from "lucide-react";
+
 import ProfileAvatar from "./ProfileAvatar";
 import ProfileCover from "./ProfileCover";
 import ProfileStats from "./ProfileStats";
@@ -10,6 +14,8 @@ import FollowButton from "@/components/follow/FollowButton";
 
 import FollowersModal from "@/components/follow/modal/FollowersModal";
 import FollowingModal from "@/components/follow/modal/FollowingModal";
+
+import { useMessageStore } from "@/features/message/store/message.store";
 
 import type { User } from "@/features/user/types/user.types";
 
@@ -26,6 +32,8 @@ export default function ProfileHeader({
   isOwner = false,
   onEditProfile,
 }: ProfileHeaderProps) {
+  const router = useRouter();
+
   const [
     followersOpen,
     setFollowersOpen,
@@ -35,6 +43,59 @@ export default function ProfileHeader({
     followingOpen,
     setFollowingOpen,
   ] = useState(false);
+
+  const [
+    openingConversation,
+    setOpeningConversation,
+  ] = useState(false);
+
+  const createConversation =
+    useMessageStore(
+      (state) =>
+        state.createConversation
+    );
+
+  const setSelectedConversation =
+    useMessageStore(
+      (state) =>
+        state.setSelectedConversation
+    );
+
+  const handleMessage =
+    async () => {
+      try {
+        setOpeningConversation(
+          true
+        );
+
+        const conversation =
+          await createConversation({
+            participantId:
+              user._id,
+          } as any);
+
+        if (
+          conversation
+        ) {
+          setSelectedConversation(
+            conversation
+          );
+        }
+
+        router.push(
+          "/messages"
+        );
+      } catch (error) {
+        console.error(
+          "Failed to open conversation",
+          error
+        );
+      } finally {
+        setOpeningConversation(
+          false
+        );
+      }
+    };
 
   return (
     <>
@@ -46,52 +107,103 @@ export default function ProfileHeader({
         <div className="px-6 pb-6">
           <div className="-mt-16 mb-4">
             <ProfileAvatar
-              avatarUrl={user.avatar?.url}
-              fullName={user.fullName}
+              avatarUrl={
+                user.avatar?.url
+              }
+              fullName={
+                user.fullName
+              }
               size={128}
-              className="border-4 border-background"
+              className="
+                border-4
+                border-background
+              "
             />
           </div>
 
-          <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+          <div
+            className="
+              flex
+              flex-col
+              gap-4
+
+              md:flex-row
+              md:items-start
+              md:justify-between
+            "
+          >
             <div className="space-y-3">
               <div>
-                <h1 className="text-2xl font-bold">
+                <h1
+                  className="
+                    text-2xl
+                    font-bold
+                  "
+                >
                   {user.fullName}
                 </h1>
 
-                <p className="text-muted-foreground">
+                <p
+                  className="
+                    text-muted-foreground
+                  "
+                >
                   @{user.username}
                 </p>
               </div>
 
               {user.bio && (
-                <p className="max-w-2xl whitespace-pre-wrap">
+                <p
+                  className="
+                    max-w-2xl
+                    whitespace-pre-wrap
+                  "
+                >
                   {user.bio}
                 </p>
               )}
 
-              <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
+              <div
+                className="
+                  flex
+                  flex-wrap
+                  gap-4
+                  text-sm
+                  text-muted-foreground
+                "
+              >
                 {user.location && (
                   <span>
-                    📍 {user.location}
+                    📍{" "}
+                    {
+                      user.location
+                    }
                   </span>
                 )}
 
                 {user.website && (
                   <a
-                    href={user.website}
+                    href={
+                      user.website
+                    }
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="hover:underline"
+                    className="
+                      hover:underline
+                    "
                   >
-                    🌐 {user.website}
+                    🌐{" "}
+                    {
+                      user.website
+                    }
                   </a>
                 )}
               </div>
 
               <ProfileStats
-                username={user.username}
+                username={
+                  user.username
+                }
                 postsCount={
                   user.postsCount
                 }
@@ -102,10 +214,14 @@ export default function ProfileHeader({
                   user.followingCount
                 }
                 onFollowersClick={() =>
-                  setFollowersOpen(true)
+                  setFollowersOpen(
+                    true
+                  )
                 }
                 onFollowingClick={() =>
-                  setFollowingOpen(true)
+                  setFollowingOpen(
+                    true
+                  )
                 }
               />
             </div>
@@ -123,18 +239,67 @@ export default function ProfileHeader({
                     px-4
                     py-2
                     font-medium
-
                     transition-all
-
                     hover:bg-white/5
                   "
                 >
                   Edit Profile
                 </button>
               ) : (
-                <FollowButton
-                  userId={user._id}
-                />
+                <div
+                  className="
+                    flex
+                    flex-wrap
+                    items-center
+                    gap-2
+                  "
+                >
+                  <FollowButton
+                    userId={
+                      user._id
+                    }
+                  />
+
+                  <button
+                    type="button"
+                    onClick={
+                      handleMessage
+                    }
+                    disabled={
+                      openingConversation
+                    }
+                    className="
+                      flex
+                      items-center
+                      gap-2
+
+                      rounded-lg
+                      border
+
+                      px-4
+                      py-2
+
+                      font-medium
+
+                      transition-all
+
+                      hover:bg-white/5
+
+                      disabled:cursor-not-allowed
+                      disabled:opacity-60
+                    "
+                  >
+                    <MessageCircle
+                      size={16}
+                    />
+
+                    <span>
+                      {openingConversation
+                        ? "Opening..."
+                        : "Message"}
+                    </span>
+                  </button>
+                </div>
               )}
             </div>
           </div>
@@ -144,17 +309,25 @@ export default function ProfileHeader({
       <FollowersModal
         open={followersOpen}
         onClose={() =>
-          setFollowersOpen(false)
+          setFollowersOpen(
+            false
+          )
         }
-        username={user.username}
+        username={
+          user.username
+        }
       />
 
       <FollowingModal
         open={followingOpen}
         onClose={() =>
-          setFollowingOpen(false)
+          setFollowingOpen(
+            false
+          )
         }
-        username={user.username}
+        username={
+          user.username
+        }
       />
     </>
   );

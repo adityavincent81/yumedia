@@ -9,8 +9,9 @@ import StoryRingList from "@/components/story/StoryRingList";
 import StoryViewer from "@/components/story/StoryViewer";
 import CreateStoryModal from "@/components/story/CreateStoryModal";
 
-export default function DashboardPage() {
+import RightSidebar from "@/components/layout/MainLayout/RightSidebar";
 
+export default function DashboardPage() {
   return (
     <>
       {/* Post */}
@@ -25,32 +26,54 @@ export default function DashboardPage() {
 
       <StoryViewer />
 
-      <main className="min-h-screen bg-black p-8 text-white">
-        <div className="mx-auto max-w-3xl space-y-6">
+      <main className="min-h-screen bg-black text-white">
+        <div
+          className="
+            mx-auto
+            flex
+            max-w-[1800px]
+            gap-8
+          "
+        >
+          {/* Feed Area */}
 
-          {/* Stories */}
-
-          <section
+          <div
             className="
-              rounded-3xl
-              border
-              border-zinc-800
-              bg-zinc-900
-              py-2
+              flex-1
+              min-w-0
+              p-8
             "
           >
-            <StoryRingList />
-          </section>
+            <div className="mx-auto max-w-3xl space-y-6">
+              {/* Stories */}
 
-          {/* Feed */}
+              <section
+                className="
+                  rounded-3xl
+                  border
+                  border-zinc-800
+                  bg-zinc-900
+                  py-2
+                "
+              >
+                <StoryRingList />
+              </section>
 
-          <section className="space-y-4">
-            <h2 className="text-xl font-semibold">
-              Home Feed
-            </h2>
+              {/* Feed */}
 
-            <FeedList />
-          </section>
+              <section className="space-y-4">
+                <h2 className="text-xl font-semibold">
+                  Home Feed
+                </h2>
+
+                <FeedList />
+              </section>
+            </div>
+          </div>
+
+          {/* Right Sidebar */}
+
+          <RightSidebar />
         </div>
       </main>
     </>

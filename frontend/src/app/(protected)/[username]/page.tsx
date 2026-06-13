@@ -8,7 +8,11 @@ import ProfileAbout from "@/components/user/ProfileAbout";
 import ProfileHeader from "@/components/user/ProfileHeader";
 import ProfileTabs from "@/components/user/ProfileTabs";
 
+import ProfilePosts from "@/components/user/ProfilePost";
+import ProfileMedia from "@/components/user/ProfileMedia";
+
 import { useProfile } from "@/features/user/hooks/useProfile";
+import { useAuthStore } from "@/features/auth/store/auth.store";
 
 import type { ProfileTab } from "@/features/user/constants/profile-tabs";
 
@@ -20,6 +24,11 @@ export default function UserProfilePage() {
 
   const username =
     params.username as string;
+
+  const currentUser =
+    useAuthStore(
+      (state) => state.user
+    );
 
   const {
     data,
@@ -45,9 +54,16 @@ export default function UserProfilePage() {
 
   const user = data.data;
 
+  const isOwner =
+    currentUser?.username ===
+    user.username;
+
   return (
     <div className="space-y-6">
-      <ProfileHeader user={user} />
+      <ProfileHeader
+        user={user}
+        isOwner={isOwner}
+      />
 
       <ProfileTabs
         activeTab={activeTab}
@@ -55,15 +71,19 @@ export default function UserProfilePage() {
       />
 
       {activeTab === "posts" && (
-        <div className="rounded-xl border p-6">
-          Posts feature coming soon.
-        </div>
+        <ProfilePosts
+          username={
+            user.username
+          }
+        />
       )}
 
       {activeTab === "media" && (
-        <div className="rounded-xl border p-6">
-          Media feature coming soon.
-        </div>
+        <ProfileMedia
+          username={
+            user.username
+          }
+        />
       )}
 
       {activeTab === "likes" && (
@@ -81,7 +101,9 @@ export default function UserProfilePage() {
       )}
 
       {activeTab === "about" && (
-        <ProfileAbout user={user} />
+        <ProfileAbout
+          user={user}
+        />
       )}
     </div>
   );
