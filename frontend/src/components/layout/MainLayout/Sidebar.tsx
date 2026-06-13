@@ -105,7 +105,7 @@ export default function Sidebar() {
                 user?.username
               }
               avatarUrl={
-                user?.avatar?.url
+                user?.avatar
               }
             />
 
