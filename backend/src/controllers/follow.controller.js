@@ -9,7 +9,7 @@ const asyncHandler = require("../utils/asyncHandler");
 
 const {
   successResponse,
-} = require("../utils/response");
+} = require("../utils/Response");
 
 class FollowController {
   followUser = asyncHandler(

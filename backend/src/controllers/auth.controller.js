@@ -9,7 +9,7 @@ const asyncHandler = require("../utils/asyncHandler");
 
 const {
   successResponse,
-} = require("../utils/response");
+} = require("../utils/Response");
 
 class AuthController {
   register = asyncHandler(async (req, res) => {
