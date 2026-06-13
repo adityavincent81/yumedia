@@ -58,11 +58,28 @@ useEffect(() => {
   setInitialized,
 ]);
 
+const meQuery = useMe(!isAuthPage);
+
+console.log("ME QUERY", meQuery);
+
+const {
+  status,
+  fetchStatus,
+} = meQuery;
+
 useEffect(() => {
-  console.log("AUTH SUCCESS");
-  console.log("FULL DATA", data);
-  console.log("DATA.DATA", data?.data);
-}, [data]);
+  console.log("STATUS", status);
+  console.log("FETCH STATUS", fetchStatus);
+  console.log("SUCCESS", isSuccess);
+  console.log("ERROR", isError);
+  console.log("DATA", data);
+}, [
+  status,
+  fetchStatus,
+  isSuccess,
+  isError,
+  data,
+]);
 
   return children;
 }
