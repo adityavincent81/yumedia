@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 
 import {
+  usePathname,
   useRouter,
 } from "next/navigation";
 
@@ -17,6 +18,7 @@ export default function ProtectedLayout({
 }) {
   const router = useRouter();
 
+  usePathname();
 
   const {
     user,
@@ -57,11 +59,8 @@ export default function ProtectedLayout({
     return null;
   }
 
-
-
   return (
-    <MainLayout
-    >
+    <MainLayout>
       {children}
     </MainLayout>
   );
