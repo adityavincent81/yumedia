@@ -150,10 +150,14 @@ export default function SidebarMoreModal({
                         item.icon
                       }
                       href={
-                        item.href
+                        "href" in item
+                          ? item.href
+                          : undefined
                       }
                       danger={
-                        item.danger
+                        "danger" in item
+                          ? item.danger
+                          : undefined
                       }
                       onClick={() =>
                         handleAction(
