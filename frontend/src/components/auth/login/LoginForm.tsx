@@ -53,37 +53,24 @@ export default function LoginForm() {
   });
 
   const onSubmit = async (
-  values: LoginFormValues
-) => {
-  try {
-    const result =
+    values: LoginFormValues
+  ) => {
+    try {
       await mutateAsync(values);
 
-    console.log(
-      "LOGIN RESULT",
-      result
-    );
+      toast.success(
+        "Login successful"
+      );
 
-    toast.success(
-      "Login successful"
-    );
+      router.push("/");
+    } catch (error: any) {
+      toast.error(
+        error?.response?.data?.message ||
+          "Login failed"
+      );
+    }
+  };
 
-    console.log(
-      "BEFORE PUSH"
-    );
-
-    router.push("/");
-
-    console.log(
-      "AFTER PUSH"
-    );
-  } catch (error) {
-    console.error(
-      "LOGIN ERROR",
-      error
-    );
-  }
-};
   const [showPassword, setShowPassword] =
   useState(false);
 

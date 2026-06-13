@@ -11,6 +11,12 @@ const {
   successResponse,
 } = require("../utils/Response");
 
+const cookieOptions = {
+  httpOnly: true,
+  secure: true,
+  sameSite: "none",
+};
+
 class AuthController {
   register = asyncHandler(async (req, res) => {
     const validatedData =
@@ -39,10 +45,7 @@ class AuthController {
       "accessToken",
       result.accessToken,
       {
-        httpOnly: true,
-        secure:
-          process.env.NODE_ENV === "production",
-        sameSite: "strict",
+        ...cookieOptions,
         maxAge: 15 * 60 * 1000,
       }
     );
@@ -51,10 +54,7 @@ class AuthController {
       "refreshToken",
       result.refreshToken,
       {
-        httpOnly: true,
-        secure:
-          process.env.NODE_ENV === "production",
-        sameSite: "strict",
+        ...cookieOptions,
         maxAge:
           7 * 24 * 60 * 60 * 1000,
       }
@@ -82,10 +82,7 @@ class AuthController {
       "accessToken",
       result.accessToken,
       {
-        httpOnly: true,
-        secure:
-          process.env.NODE_ENV === "production",
-        sameSite: "strict",
+        ...cookieOptions,
         maxAge: 15 * 60 * 1000,
       }
     );
@@ -94,10 +91,7 @@ class AuthController {
       "refreshToken",
       result.refreshToken,
       {
-        httpOnly: true,
-        secure:
-          process.env.NODE_ENV === "production",
-        sameSite: "strict",
+        ...cookieOptions,
         maxAge:
           7 * 24 * 60 * 60 * 1000,
       }
@@ -105,7 +99,8 @@ class AuthController {
 
     return successResponse(res, {
       statusCode: 200,
-      message: "Token refreshed successfully",
+      message:
+        "Token refreshed successfully",
     });
   });
 
@@ -117,8 +112,15 @@ class AuthController {
       refreshToken
     );
 
-    res.clearCookie("accessToken");
-    res.clearCookie("refreshToken");
+    res.clearCookie(
+      "accessToken",
+      cookieOptions
+    );
+
+    res.clearCookie(
+      "refreshToken",
+      cookieOptions
+    );
 
     return successResponse(res, {
       statusCode: 200,
@@ -132,8 +134,15 @@ class AuthController {
         req.user.userId
       );
 
-      res.clearCookie("accessToken");
-      res.clearCookie("refreshToken");
+      res.clearCookie(
+        "accessToken",
+        cookieOptions
+      );
+
+      res.clearCookie(
+        "refreshToken",
+        cookieOptions
+      );
 
       return successResponse(res, {
         statusCode: 200,
@@ -151,10 +160,12 @@ class AuthController {
 
     return successResponse(res, {
       statusCode: 200,
-      message: "User fetched successfully",
+      message:
+        "User fetched successfully",
       data: user,
     });
   });
 }
 
-module.exports = new AuthController();
+module.exports =
+  new AuthController();
