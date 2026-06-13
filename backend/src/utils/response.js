@@ -12,7 +12,6 @@ const successResponse = (
     data,
   });
 };
-
 const errorResponse = (
   res,
   {
