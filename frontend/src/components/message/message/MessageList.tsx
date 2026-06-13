@@ -203,8 +203,7 @@ export default function MessageList({
                         avatar={
                           message
                             .sender
-                            ?.avatar
-                            ?.url
+                            ?.avatar ?? undefined
                         }
                         fullName={
                           message

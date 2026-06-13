@@ -57,7 +57,7 @@ const otherParticipant =
   ]);
 
   const avatarUrl =
-  otherParticipant?.avatar?.url;
+    otherParticipant?.avatar;
 
   const lastMessage =
     conversation.lastMessage as

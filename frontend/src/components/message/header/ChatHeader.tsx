@@ -47,8 +47,10 @@ export default function ChatHeader({
       currentUser,
     ]);
 
+  const _avatar = participant?.avatar as any;
+
   const avatarUrl =
-    participant?.avatar?.url;
+    typeof _avatar === "string" ? _avatar : _avatar?.url;
 
   return (
     <header
