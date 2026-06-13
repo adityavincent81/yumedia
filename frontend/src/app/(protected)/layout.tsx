@@ -3,7 +3,6 @@
 import { useEffect } from "react";
 
 import {
-  usePathname,
   useRouter,
 } from "next/navigation";
 
@@ -18,7 +17,6 @@ export default function ProtectedLayout({
 }) {
   const router = useRouter();
 
-  const pathname = usePathname();
 
   const {
     user,
@@ -59,15 +57,10 @@ export default function ProtectedLayout({
     return null;
   }
 
-  const showRightSidebar =
-    !pathname.startsWith("/profile") &&
-    !pathname.startsWith("/accounts");
+
 
   return (
     <MainLayout
-      showRightSidebar={
-        showRightSidebar
-      }
     >
       {children}
     </MainLayout>
