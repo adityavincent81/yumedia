@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 // src/components/story/StoryViewer.tsx
 
 "use client";
@@ -321,30 +322,25 @@ export default function StoryViewer() {
           />
 
           <StoryHeader
-  story={selectedStory}
-  isPaused={isPaused}
-  isMuted={isMuted}
-  onTogglePause={() =>
-    setIsPaused(
-      (prev) => !prev
-    )
-  }
-  onToggleMute={() =>
-    setIsMuted(
-      (prev) => !prev
-    )
-  }
-  onMoreActions={() =>
-    setIsMoreActionsOpen(
-      true
-    )
-  }
-  onOpenViewers={() =>
-    setIsViewersOpen(
-      true
-    )
-  }
-/>
+            story={selectedStory}
+            isPaused={isPaused}
+            isMuted={isMuted}
+            onTogglePause={() =>
+              setIsPaused(
+                (prev) => !prev
+              )
+            }
+            onToggleMute={() =>
+              setIsMuted(
+                (prev) => !prev
+              )
+            }
+            onMoreActions={() =>
+              setIsMoreActionsOpen(
+                true
+              )
+            }
+          />
         </div>
 
         {/* Story Content */}

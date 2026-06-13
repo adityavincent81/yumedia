@@ -114,7 +114,7 @@ export default function ProfileMedia({
           ) => (
             <button
               key={
-                item._id
+                item.publicId
               }
               type="button"
               onClick={() =>
