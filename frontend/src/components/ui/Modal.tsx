@@ -102,45 +102,43 @@ export default function Modal({
           event.stopPropagation()
         }
       >
-        {(title || onClose) && (
-          <div
+        <div
+          className="
+            flex
+            items-center
+            justify-between
+            border-b
+            border-zinc-800
+            px-6
+            py-4
+          "
+        >
+          <h2
             className="
-              flex
-              items-center
-              justify-between
-              border-b
-              border-zinc-800
-              px-6
-              py-4
+              text-lg
+              font-semibold
+              text-white
             "
           >
-            <h2
-              className="
-                text-lg
-                font-semibold
-                text-white
-              "
-            >
-              {title}
-            </h2>
+            {title}
+          </h2>
 
-            <button
-              type="button"
-              onClick={onClose}
-              className="
-                rounded-lg
-                p-2
-                text-zinc-400
-                transition-all
-                duration-200
-                hover:bg-zinc-800
-                hover:text-white
-              "
-            >
-              ✕
-            </button>
-          </div>
-        )}
+          <button
+            type="button"
+            onClick={onClose}
+            className="
+              rounded-lg
+              p-2
+              text-zinc-400
+              transition-all
+              duration-200
+              hover:bg-zinc-800
+              hover:text-white
+            "
+          >
+            ✕
+          </button>
+        </div>
 
         <div className="p-6">
           {children}
