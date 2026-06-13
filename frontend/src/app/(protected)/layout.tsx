@@ -30,7 +30,7 @@ export default function ProtectedLayout({
       isInitialized &&
       !user
     ) {
-      router.replace("/");
+      router.replace("/login");
     }
   }, [
     user,
