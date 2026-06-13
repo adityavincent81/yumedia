@@ -42,11 +42,11 @@ export default function CommentInput({
   const [content, setContent] =
     useState("");
 
+  const avatar = user?.avatar as string | { url?: string } | undefined;
   const avatarSrc =
-    typeof user?.avatar ===
-    "string"
-      ? user.avatar
-      : user?.avatar?.url;
+    typeof avatar === "string"
+      ? avatar
+      : avatar?.url;
 
   const handleSubmit =
     async () => {
