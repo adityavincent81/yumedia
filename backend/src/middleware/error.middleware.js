@@ -3,7 +3,7 @@ const { ZodError } = require("zod");
 
 const {
   errorResponse,
-} = require("../utils/response");
+} = require("../utils/Response");
 
 const errorMiddleware = (
   err,
