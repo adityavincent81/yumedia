@@ -10,6 +10,7 @@ import {
 import MainLayout from "@/components/layout/MainLayout";
 
 import { useAuthStore } from "@/features/auth/store/auth.store";
+import Providers from "@/providers";
 
 export default function ProtectedLayout({
   children,
@@ -61,7 +62,9 @@ export default function ProtectedLayout({
 
   return (
     <MainLayout>
-      {children}
+      <Providers>
+                {children}
+              </Providers>
     </MainLayout>
   );
 }
