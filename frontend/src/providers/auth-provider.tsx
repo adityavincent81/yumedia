@@ -13,9 +13,17 @@ export default function AuthProvider({
 }) {
   const pathname = usePathname();
 
-  const isAuthPage =
-    pathname === "/login" ||
-    pathname === "/register";
+console.log("PATHNAME", pathname);
+
+const isAuthPage =
+  pathname === "/login" ||
+  pathname === "/register";
+
+console.log("IS AUTH PAGE", isAuthPage);
+
+const meQuery = useMe(!isAuthPage);
+
+console.log("ENABLED", !isAuthPage);
 
   const {
     data,
@@ -58,7 +66,6 @@ useEffect(() => {
   setInitialized,
 ]);
 
-const meQuery = useMe(!isAuthPage);
 
 console.log("ME QUERY", meQuery);
 
