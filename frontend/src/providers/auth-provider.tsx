@@ -58,5 +58,11 @@ useEffect(() => {
   setInitialized,
 ]);
 
+useEffect(() => {
+  console.log("AUTH SUCCESS");
+  console.log("FULL DATA", data);
+  console.log("DATA.DATA", data?.data);
+}, [data]);
+
   return children;
 }
