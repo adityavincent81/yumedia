@@ -19,6 +19,9 @@ class AuthController {
     const result =
       await authService.register(validatedData);
 
+      console.log("===== LOGIN SUCCESS =====");
+console.log("NODE_ENV:", process.env.NODE_ENV);
+console.log("Cookies before set:", req.cookies);
     return successResponse(res, {
       statusCode: 201,
       message: "Register successful",
@@ -73,6 +76,11 @@ class AuthController {
   refresh = asyncHandler(async (req, res) => {
     const refreshToken =
       req.cookies?.refreshToken;
+      console.log("\n===== REFRESH =====");
+console.log("URL:", req.originalUrl);
+console.log("Headers Cookie:", req.headers.cookie);
+console.log("Parsed Cookies:", req.cookies);
+console.log("Refresh Exists:", !!refreshToken);
 
     const result =
       await authService.refresh(
@@ -103,6 +111,9 @@ class AuthController {
           7 * 24 * 60 * 60 * 1000,
       }
     );
+    console.log("Cookies after set (server cannot read newly set cookies):", req.cookies);
+console.log("Access token generated:", !!result.accessToken);
+console.log("Refresh token generated:", !!result.refreshToken);
 
     return successResponse(res, {
       statusCode: 200,
@@ -115,6 +126,11 @@ class AuthController {
   logout = asyncHandler(async (req, res) => {
     const refreshToken =
       req.cookies?.refreshToken;
+      console.log("\n===== REFRESH =====");
+console.log("URL:", req.originalUrl);
+console.log("Headers Cookie:", req.headers.cookie);
+console.log("Parsed Cookies:", req.cookies);
+console.log("Refresh Exists:", !!refreshToken);
 
     await authService.logout(
       refreshToken
