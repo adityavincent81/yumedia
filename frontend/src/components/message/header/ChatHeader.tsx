@@ -47,10 +47,8 @@ export default function ChatHeader({
       currentUser,
     ]);
 
-  const _avatar = participant?.avatar as any;
-
   const avatarUrl =
-    typeof _avatar === "string" ? _avatar : _avatar?.url;
+    participant?.avatar?.url;
 
   return (
     <header
@@ -89,7 +87,7 @@ export default function ChatHeader({
             <Image
               src={avatarUrl}
               alt={
-                participant?.fullName ||
+                participant?.fullName ??
                 "User"
               }
               width={44}
@@ -123,7 +121,7 @@ export default function ChatHeader({
             >
               {participant?.fullName?.charAt(
                 0
-              ) || "U"}
+              ) ?? "U"}
             </div>
           )}
 
@@ -166,7 +164,7 @@ export default function ChatHeader({
                 text-white
               "
             >
-              {participant?.fullName ||
+              {participant?.fullName ??
                 "Unknown User"}
             </h2>
 

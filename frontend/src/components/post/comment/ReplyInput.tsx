@@ -43,9 +43,7 @@ export default function ReplyInput({
     useState("");
 
   const avatarSrc =
-    typeof user?.avatar === "string"
-      ? user.avatar
-      : (user?.avatar as { url?: string } | undefined)?.url;
+    user?.avatar?.url;
 
   const handleSubmit =
     async () => {
@@ -134,13 +132,9 @@ export default function ReplyInput({
         "
       >
         <Avatar
-          src={
-            avatarSrc?.trim()
-              ? avatarSrc
-              : undefined
-          }
+          src={avatarSrc}
           alt={
-            user?.username ||
+            user?.username ??
             "User"
           }
           size="sm"

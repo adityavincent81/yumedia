@@ -6,7 +6,10 @@ import Image from "next/image";
 
 import { useMemo } from "react";
 
-import { Check, CheckCheck } from "lucide-react";
+import {
+  Check,
+  CheckCheck,
+} from "lucide-react";
 
 import { useMessage } from "@/features/message/hooks/useMessage";
 import { useAuthStore } from "@/features/auth/store/auth.store";
@@ -25,7 +28,6 @@ export default function ConversationItem({
 }: ConversationItemProps) {
   const {
     selectedConversation,
-
     setSelectedConversation,
   } = useMessage();
 
@@ -34,30 +36,27 @@ export default function ConversationItem({
     conversation._id;
 
   const currentUser =
-  useAuthStore(
-    (state) => state.user
-  );
-
-const otherParticipant =
-  useMemo(() => {
-    return (
-      conversation.participants?.find(
-        (
-          participant
-        ) =>
-          participant._id !==
-          currentUser?._id
-      ) ||
-      conversation
-        .participants?.[0]
+    useAuthStore(
+      (state) => state.user
     );
-  }, [
-    conversation,
-    currentUser,
-  ]);
+
+  const otherParticipant =
+    useMemo(() => {
+      return (
+        conversation.participants?.find(
+          (participant) =>
+            participant._id !==
+            currentUser?._id
+        ) ||
+        conversation.participants?.[0]
+      );
+    }, [
+      conversation,
+      currentUser,
+    ]);
 
   const avatarUrl =
-    otherParticipant?.avatar;
+    otherParticipant?.avatar?.url;
 
   const lastMessage =
     conversation.lastMessage as
@@ -66,12 +65,8 @@ const otherParticipant =
 
   const previewText =
     useMemo(() => {
-      if (
-        !lastMessage
-      ) {
-        return (
-          "Start a conversation"
-        );
+      if (!lastMessage) {
+        return "Start a conversation";
       }
 
       switch (
@@ -111,29 +106,19 @@ const otherParticipant =
         return "";
       }
 
-      const date =
-        new Date(
-          conversation.lastMessageAt
-        );
-
-      return date.toLocaleTimeString(
-        [],
-        {
-          hour:
-            "2-digit",
-
-          minute:
-            "2-digit",
-        }
-      );
+      return new Date(
+        conversation.lastMessageAt
+      ).toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
     }, [
       conversation.lastMessageAt,
     ]);
 
-    
-
   return (
     <button
+      type="button"
       onClick={() =>
         setSelectedConversation(
           conversation
@@ -151,17 +136,12 @@ const otherParticipant =
         p-3
 
         text-left
-
         transition-all
 
         ${
           isActive
-            ? `
-              bg-zinc-900
-            `
-            : `
-              hover:bg-zinc-900/50
-            `
+            ? "bg-zinc-900"
+            : "hover:bg-zinc-900/50"
         }
       `}
     >
@@ -177,7 +157,7 @@ const otherParticipant =
           <Image
             src={avatarUrl}
             alt={
-              otherParticipant?.username ||
+              otherParticipant?.username ??
               "User"
             }
             width={48}
@@ -208,11 +188,11 @@ const otherParticipant =
           >
             {otherParticipant?.fullName?.charAt(
               0
-            ) || "U"}
+            ) ?? "U"}
           </div>
         )}
 
-        {/* Online Status V2 */}
+        {/* Online Status */}
 
         <div
           className="
@@ -257,8 +237,7 @@ const otherParticipant =
               text-white
             "
           >
-            {otherParticipant
-              ?.fullName ||
+            {otherParticipant?.fullName ??
               "Unknown User"}
           </div>
 
@@ -270,9 +249,7 @@ const otherParticipant =
               text-zinc-500
             "
           >
-            {
-              formattedTime
-            }
+            {formattedTime}
           </span>
         </div>
 
@@ -284,8 +261,6 @@ const otherParticipant =
             gap-1
           "
         >
-          {/* Read Status */}
-
           {lastMessage && (
             <span
               className="
@@ -318,8 +293,6 @@ const otherParticipant =
         </div>
       </div>
 
-      {/* Unread Badge */}
-
       {!!conversation.unreadCount &&
         conversation.unreadCount >
           0 && (
@@ -341,9 +314,7 @@ const otherParticipant =
               text-black
             "
           >
-            {
-              conversation.unreadCount
-            }
+            {conversation.unreadCount}
           </div>
         )}
     </button>

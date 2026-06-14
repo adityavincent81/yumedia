@@ -11,15 +11,15 @@ import {
   Eye,
 } from "lucide-react";
 
+import type { Media } from "@/types/media.types";
+
 interface SharedPostCardProps {
   post?: {
     _id: string;
 
     content?: string;
 
-    media?: {
-      url?: string;
-    };
+    media?: Media | null;
 
     author?: {
       _id: string;
@@ -28,7 +28,7 @@ interface SharedPostCardProps {
 
       fullName: string;
 
-      avatar?: string;
+      avatar?: Media | null;
     };
 
     likesCount?: number;
@@ -45,7 +45,6 @@ interface SharedPostCardProps {
 
 export default function SharedPostCard({
   post,
-
   onClick,
 }: SharedPostCardProps) {
   if (!post) {
@@ -153,16 +152,13 @@ export default function SharedPostCard({
           py-3
         "
       >
-        {post.author
-          ?.avatar ? (
+        {post.author?.avatar?.url ? (
           <Image
             src={
-              post.author
-                .avatar
+              post.author.avatar.url
             }
             alt={
-              post.author
-                .fullName
+              post.author.fullName
             }
             width={28}
             height={28}
@@ -190,7 +186,7 @@ export default function SharedPostCard({
           >
             {post.author?.fullName?.charAt(
               0
-            ) || "U"}
+            ) ?? "U"}
           </div>
         )}
 
@@ -208,7 +204,7 @@ export default function SharedPostCard({
             "
           >
             {post.author
-              ?.fullName ||
+              ?.fullName ??
               "Unknown User"}
           </p>
 
@@ -222,7 +218,7 @@ export default function SharedPostCard({
           >
             @
             {post.author
-              ?.username ||
+              ?.username ??
               "unknown"}
           </p>
         </div>
@@ -303,7 +299,7 @@ export default function SharedPostCard({
           />
 
           <span>
-            {post.likesCount ||
+            {post.likesCount ??
               0}
           </span>
         </div>
@@ -320,7 +316,7 @@ export default function SharedPostCard({
           />
 
           <span>
-            {post.commentsCount ||
+            {post.commentsCount ??
               0}
           </span>
         </div>
@@ -337,7 +333,7 @@ export default function SharedPostCard({
           />
 
           <span>
-            {post.viewsCount ||
+            {post.viewsCount ??
               0}
           </span>
         </div>

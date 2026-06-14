@@ -46,10 +46,7 @@ export default function CommentItem({
   onToggleReplies,
 }: CommentItemProps) {
   const avatarSrc =
-    typeof comment.author.avatar ===
-    "string"
-      ? comment.author.avatar
-      : comment.author.avatar?.url;
+    comment.author.avatar?.url;
 
   const createdAt =
     new Date(
@@ -70,11 +67,7 @@ export default function CommentItem({
       "
     >
       <Avatar
-        src={
-          avatarSrc?.trim()
-            ? avatarSrc
-            : undefined
-        }
+        src={avatarSrc}
         alt={
           comment.author.username
         }

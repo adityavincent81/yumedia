@@ -42,11 +42,8 @@ export default function CommentInput({
   const [content, setContent] =
     useState("");
 
-  const avatar = user?.avatar as string | { url?: string } | undefined;
   const avatarSrc =
-    typeof avatar === "string"
-      ? avatar
-      : avatar?.url;
+    user?.avatar?.url;
 
   const handleSubmit =
     async () => {
@@ -84,13 +81,9 @@ export default function CommentInput({
       "
     >
       <Avatar
-        src={
-          avatarSrc?.trim()
-            ? avatarSrc
-            : undefined
-        }
+        src={avatarSrc}
         alt={
-          user?.username ||
+          user?.username ??
           "User"
         }
         size="sm"

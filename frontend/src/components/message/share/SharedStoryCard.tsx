@@ -10,6 +10,8 @@ import {
   BookOpen,
 } from "lucide-react";
 
+import type { Media } from "@/types/media.types";
+
 interface SharedStoryCardProps {
   story?: {
     _id: string;
@@ -21,9 +23,7 @@ interface SharedStoryCardProps {
 
     text?: string;
 
-    media?: {
-      url?: string;
-    };
+    media?: Media | null;
 
     author?: {
       _id: string;
@@ -32,7 +32,7 @@ interface SharedStoryCardProps {
 
       fullName: string;
 
-      avatar?: string;
+      avatar?: Media | null;
     };
 
     expiresAt?: string;
@@ -45,7 +45,6 @@ interface SharedStoryCardProps {
 
 export default function SharedStoryCard({
   story,
-
   onClick,
 }: SharedStoryCardProps) {
   if (!story) {
@@ -251,7 +250,7 @@ export default function SharedStoryCard({
                   text-sm
                 "
               >
-                {story.text ||
+                {story.text ??
                   "Text Story"}
               </p>
             </div>
@@ -277,12 +276,11 @@ export default function SharedStoryCard({
             gap-2
           "
         >
-          {story.author
-            ?.avatar ? (
+          {story.author?.avatar?.url ? (
             <Image
               src={
-                story.author
-                  .avatar
+                story.author.avatar
+                  .url
               }
               alt={
                 story.author
@@ -314,7 +312,7 @@ export default function SharedStoryCard({
             >
               {story.author?.fullName?.charAt(
                 0
-              ) || "U"}
+              ) ?? "U"}
             </div>
           )}
 
@@ -325,7 +323,7 @@ export default function SharedStoryCard({
             "
           >
             {story.author
-              ?.fullName ||
+              ?.fullName ??
               "Unknown User"}
           </span>
         </div>
