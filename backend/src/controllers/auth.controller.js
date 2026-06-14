@@ -11,6 +11,12 @@ const {
   successResponse,
 } = require("../utils/Response");
 
+const {
+  baseCookieOptions,
+  accessTokenCookieOptions,
+  refreshTokenCookieOptions,
+} = require("../utils/cookie");
+
 class AuthController {
   register = asyncHandler(async (req, res) => {
     const validatedData =
@@ -19,9 +25,6 @@ class AuthController {
     const result =
       await authService.register(validatedData);
 
-      console.log("===== LOGIN SUCCESS =====");
-console.log("NODE_ENV:", process.env.NODE_ENV);
-console.log("Cookies before set:", req.cookies);
     return successResponse(res, {
       statusCode: 201,
       message: "Register successful",
@@ -41,27 +44,13 @@ console.log("Cookies before set:", req.cookies);
     res.cookie(
       "accessToken",
       result.accessToken,
-      {
-        httpOnly: true,
-        secure:
-          process.env.NODE_ENV === "production",
-        sameSite: "strict",
-        maxAge: 15 * 60 * 1000,
-      }
+      accessTokenCookieOptions
     );
 
     res.cookie(
       "refreshToken",
       result.refreshToken,
-      {
-        httpOnly: true,
-        secure:
-          process.env.NODE_ENV === "production",
-        sameSite: "strict",
-        maxAge:
-          7 * 24 * 60 * 60 * 1000,
-      }
-      
+      refreshTokenCookieOptions
     );
 
     return successResponse(res, {
@@ -76,11 +65,6 @@ console.log("Cookies before set:", req.cookies);
   refresh = asyncHandler(async (req, res) => {
     const refreshToken =
       req.cookies?.refreshToken;
-      console.log("\n===== REFRESH =====");
-console.log("URL:", req.originalUrl);
-console.log("Headers Cookie:", req.headers.cookie);
-console.log("Parsed Cookies:", req.cookies);
-console.log("Refresh Exists:", !!refreshToken);
 
     const result =
       await authService.refresh(
@@ -90,54 +74,39 @@ console.log("Refresh Exists:", !!refreshToken);
     res.cookie(
       "accessToken",
       result.accessToken,
-      {
-        httpOnly: true,
-        secure:
-          process.env.NODE_ENV === "production",
-        sameSite: "strict",
-        maxAge: 15 * 60 * 1000,
-      }
+      accessTokenCookieOptions
     );
 
     res.cookie(
       "refreshToken",
       result.refreshToken,
-      {
-        httpOnly: true,
-        secure:
-          process.env.NODE_ENV === "production",
-        sameSite: "strict",
-        maxAge:
-          7 * 24 * 60 * 60 * 1000,
-      }
+      refreshTokenCookieOptions
     );
-    console.log("Cookies after set (server cannot read newly set cookies):", req.cookies);
-console.log("Access token generated:", !!result.accessToken);
-console.log("Refresh token generated:", !!result.refreshToken);
 
     return successResponse(res, {
       statusCode: 200,
-      message: "Token refreshed successfully",
+      message:
+        "Token refreshed successfully",
     });
   });
-
-  
 
   logout = asyncHandler(async (req, res) => {
     const refreshToken =
       req.cookies?.refreshToken;
-      console.log("\n===== REFRESH =====");
-console.log("URL:", req.originalUrl);
-console.log("Headers Cookie:", req.headers.cookie);
-console.log("Parsed Cookies:", req.cookies);
-console.log("Refresh Exists:", !!refreshToken);
 
     await authService.logout(
       refreshToken
     );
 
-    res.clearCookie("accessToken");
-    res.clearCookie("refreshToken");
+    res.clearCookie(
+      "accessToken",
+      baseCookieOptions
+    );
+
+    res.clearCookie(
+      "refreshToken",
+      baseCookieOptions
+    );
 
     return successResponse(res, {
       statusCode: 200,
@@ -151,8 +120,15 @@ console.log("Refresh Exists:", !!refreshToken);
         req.user.userId
       );
 
-      res.clearCookie("accessToken");
-      res.clearCookie("refreshToken");
+      res.clearCookie(
+        "accessToken",
+        baseCookieOptions
+      );
+
+      res.clearCookie(
+        "refreshToken",
+        baseCookieOptions
+      );
 
       return successResponse(res, {
         statusCode: 200,
@@ -170,7 +146,8 @@ console.log("Refresh Exists:", !!refreshToken);
 
     return successResponse(res, {
       statusCode: 200,
-      message: "User fetched successfully",
+      message:
+        "User fetched successfully",
       data: user,
     });
   });
