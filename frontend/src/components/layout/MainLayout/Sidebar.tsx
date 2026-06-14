@@ -105,7 +105,8 @@ export default function Sidebar() {
                 user?.username
               }
               avatarUrl={
-                user?.avatar
+                user?.avatar?.url ??
+                null
               }
             />
 
@@ -196,10 +197,10 @@ export default function Sidebar() {
                 <SidebarItem
                   pathname={pathname}
                   item={{
-                  href: "/about",
-                  label: "Info",
-                  icon: Info,
-  }}
+                    href: "/about",
+                    label: "Info",
+                    icon: Info,
+                  }}
                 />
               </div>
             </div>

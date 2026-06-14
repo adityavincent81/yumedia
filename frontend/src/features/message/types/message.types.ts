@@ -12,6 +12,10 @@ import type {
   Story,
 } from "@/features/story/types/story.types";
 
+import type {
+  Media,
+} from "@/types/media.types";
+
 /**
  * Conversation
  */
@@ -44,7 +48,7 @@ export type UserPresence =
   | "away";
 
 /**
- * Media
+ * Message Attachment
  */
 
 export interface MessageMedia {
@@ -126,7 +130,7 @@ export interface Conversation {
 
   groupName?: string;
 
-  groupAvatar?: string;
+  groupAvatar?: Media | null;
 
   isGroup?: boolean;
 
@@ -227,7 +231,7 @@ export interface TypingEvent {
 
     username: string;
 
-    avatar?: string;
+    avatar: Media | null;
   };
 
   isTyping: boolean;

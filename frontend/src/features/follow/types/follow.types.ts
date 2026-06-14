@@ -1,3 +1,5 @@
+import type { Media } from "@/types/media.types";
+
 export interface FollowUser {
   _id: string;
 
@@ -5,16 +7,15 @@ export interface FollowUser {
 
   fullName: string;
 
-  avatar?: {
-    url: string;
-    publicId?: string;
-  };
+  avatar: Media | null;
 
-  faculty?: string;
+  faculty?: string | null;
 
-  major?: string;
+  major?: string | null;
 
-  batchYear?: number;
+  batchYear?: number | null;
+
+  isVerified?: boolean;
 }
 
 export interface FollowRelation {

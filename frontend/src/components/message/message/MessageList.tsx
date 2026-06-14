@@ -200,17 +200,18 @@ export default function MessageList({
                   >
                     {showAvatar ? (
                       <MessageAvatar
-                        avatar={
-                          message
-                            .sender
-                            ?.avatar ?? undefined
-                        }
-                        fullName={
-                          message
-                            .sender
-                            ?.fullName
-                        }
-                      />
+                      avatar={
+                        message
+                          .sender
+                          ?.avatar?.url ??
+                        undefined
+                      }
+                      fullName={
+                        message
+                          .sender
+                          ?.fullName
+                      }
+                    />
                     ) : null}
                   </div>
                 )}

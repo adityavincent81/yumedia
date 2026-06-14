@@ -1,4 +1,4 @@
-// src/features/story/types/story.types.ts
+import type { Media } from "@/types/media.types";
 
 export type StoryType =
   | "image"
@@ -13,10 +13,9 @@ export type StoryVisibility =
 
 export interface StoryMedia {
   url: string;
+
   publicId: string;
 }
-
-
 
 export interface StoryAuthor {
   _id: string;
@@ -25,9 +24,7 @@ export interface StoryAuthor {
 
   fullName: string;
 
-  avatar?: {
-    url?: string;
-  };
+  avatar: Media | null;
 }
 
 export interface Story {
@@ -110,6 +107,8 @@ export interface UpdateStoryPayload {
   allowedUsers?: string[];
 
   excludedUsers?: string[];
+
+  media?: File;
 }
 
 export interface StoryViewer {
@@ -119,9 +118,7 @@ export interface StoryViewer {
 
   fullName: string;
 
-  avatar?: {
-    url?: string;
-  };
+  avatar: Media | null;
 }
 
 export interface StoryViewersResponse {

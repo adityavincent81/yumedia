@@ -1,3 +1,5 @@
+import type { Media } from "@/types/media.types";
+
 export type PostVisibility =
   | "public"
   | "followers"
@@ -14,7 +16,7 @@ export interface PostAuthor {
 
   fullName: string;
 
-  avatar?: string | null;
+  avatar: Media | null;
 
   isVerified: boolean;
 }

@@ -1,3 +1,5 @@
+import type { Media } from "@/types/media.types";
+
 export interface CollectionOwner {
   _id: string;
 
@@ -5,7 +7,7 @@ export interface CollectionOwner {
 
   fullName: string;
 
-  avatar?: string;
+  avatar: Media | null;
 
   isVerified?: boolean;
 }
@@ -19,7 +21,7 @@ export interface Collection {
 
   description: string;
 
-  coverImage: string;
+  coverImage: Media | null;
 
   isPrivate: boolean;
 

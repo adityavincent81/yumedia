@@ -1,3 +1,5 @@
+import type { Media } from "@/types/media.types";
+
 export interface User {
   _id: string;
 
@@ -5,8 +7,9 @@ export interface User {
   nim: string;
   username: string;
 
-  avatar: string | null;
-  cover: string | null;
+  avatar: Media | null;
+  cover: Media | null;
+
   bio: string;
 
   faculty: string | null;
@@ -20,7 +23,10 @@ export interface User {
   isVerified: boolean;
   isPrivate: boolean;
 
-  lastSeenAt: string;
+  website: string | null;
+  location: string | null;
+
+  lastSeenAt: string | null;
 
   createdAt: string;
   updatedAt: string;
@@ -54,13 +60,18 @@ export interface MeResponse {
 
 export interface AuthStore {
   user: User | null;
+
   isAuthenticated: boolean;
+
   isInitialized: boolean;
 
-setInitialized: (
-  value: boolean
-) => void;
+  setInitialized: (
+    value: boolean
+  ) => void;
 
-  setUser: (user: User | null) => void;
+  setUser: (
+    user: User | null
+  ) => void;
+
   clearUser: () => void;
 }

@@ -19,6 +19,8 @@ const errorMiddleware = require("./middleware/error.middleware");
 
 const app = express();
 
+app.set("trust proxy", 1);
+
 app.use(
   cors({
     origin: process.env.CLIENT_URL,

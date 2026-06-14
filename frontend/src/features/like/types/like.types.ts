@@ -1,6 +1,4 @@
-import type {
-  User,
-} from "@/features/auth/types/auth.types";
+import type { Media } from "@/types/media.types";
 
 export interface LikeStatus {
   liked: boolean;
@@ -19,9 +17,7 @@ export interface LikeUser {
 
   fullName: string;
 
-  avatar?: {
-    url?: string;
-  } | null;
+  avatar: Media | null;
 
   isVerified?: boolean;
 }

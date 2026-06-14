@@ -1,3 +1,5 @@
+import type { Media } from "@/types/media.types";
+
 import type {
   Post,
 } from "@/features/post/types/post.types";
@@ -9,9 +11,7 @@ export interface CommentAuthor {
 
   fullName: string;
 
-  avatar?: {
-    url?: string;
-  } | null;
+  avatar: Media | null;
 
   isVerified?: boolean;
 }

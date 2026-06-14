@@ -1,7 +1,4 @@
-export interface Media {
-  url: string | null;
-  publicId: string | null;
-}
+import type { Media } from "@/types/media.types";
 
 export interface User {
   _id: string;
@@ -12,9 +9,9 @@ export interface User {
 
   username: string;
 
-  avatar: Media;
+  avatar: Media | null;
 
-  cover: Media;
+  cover: Media | null;
 
   bio: string;
 
@@ -38,7 +35,7 @@ export interface User {
 
   isActive: boolean;
 
-  lastSeenAt: string;
+  lastSeenAt: string | null;
 
   createdAt: string;
 

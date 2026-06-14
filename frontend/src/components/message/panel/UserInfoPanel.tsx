@@ -16,6 +16,8 @@ import UserPresence, {
   type PresenceStatus,
 } from "../header/UserPresence";
 
+import type { Media } from "@/types/media.types";
+
 interface UserInfoPanelProps {
   user?: {
     _id: string;
@@ -24,7 +26,7 @@ interface UserInfoPanelProps {
 
     fullName: string;
 
-    avatar?: string;
+    avatar?: Media | null;
 
     bio?: string;
 
@@ -128,9 +130,9 @@ export default function UserInfoPanel({
       >
         {/* Avatar */}
 
-        {user.avatar ? (
+        {user.avatar?.url ? (
           <Image
-            src={user.avatar}
+            src={user.avatar.url}
             alt={user.fullName}
             width={96}
             height={96}
@@ -166,9 +168,7 @@ export default function UserInfoPanel({
               text-white
             "
           >
-            {user.fullName?.charAt(
-              0
-            )}
+            {user.fullName?.charAt(0)}
           </div>
         )}
 

@@ -37,13 +37,7 @@ export default function PostHeader({
     );
 
   const avatarSrc =
-    typeof author.avatar === "string"
-      ? author.avatar
-      : author.avatar &&
-        typeof author.avatar === "object" &&
-        "url" in author.avatar
-      ? (author.avatar as { url: string }).url
-      : undefined;
+    author.avatar?.url ?? undefined;
 
   return (
     <div
