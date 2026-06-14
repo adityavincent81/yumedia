@@ -48,6 +48,7 @@ class AuthController {
     );
 
     res.cookie(
+      
       "refreshToken",
       result.refreshToken,
       {
@@ -58,6 +59,7 @@ class AuthController {
         maxAge:
           7 * 24 * 60 * 60 * 1000,
       }
+      
     );
 
     return successResponse(res, {
@@ -109,6 +111,8 @@ class AuthController {
     });
   });
 
+  
+
   logout = asyncHandler(async (req, res) => {
     const refreshToken =
       req.cookies?.refreshToken;
@@ -156,5 +160,7 @@ class AuthController {
     });
   });
 }
-
+console.log("========== REFRESH ==========");
+console.log(req.cookies);
+console.log(req.cookies?.refreshToken);
 module.exports = new AuthController();
