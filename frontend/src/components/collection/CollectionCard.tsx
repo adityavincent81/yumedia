@@ -19,6 +19,9 @@ interface CollectionCardProps {
 export default function CollectionCard({
   collection,
 }: CollectionCardProps) {
+  const coverImage =
+    collection.coverImage?.url;
+
   return (
     <Link
       href={`/collections/${collection._id}`}
@@ -47,11 +50,9 @@ export default function CollectionCard({
           bg-zinc-950
         "
       >
-        {collection.coverImage ? (
+        {coverImage ? (
           <img
-            src={
-              collection.coverImage
-            }
+            src={coverImage}
             alt={collection.name}
             className="
               h-full
@@ -152,9 +153,7 @@ export default function CollectionCard({
               text-zinc-400
             "
           >
-            {
-              collection.description
-            }
+            {collection.description}
           </p>
         )}
 
@@ -173,8 +172,7 @@ export default function CollectionCard({
             "
           >
             {collection.postsCount}{" "}
-            {collection.postsCount ===
-            1
+            {collection.postsCount === 1
               ? "post"
               : "posts"}
           </span>
