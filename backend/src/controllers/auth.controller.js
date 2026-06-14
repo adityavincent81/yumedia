@@ -48,7 +48,6 @@ class AuthController {
     );
 
     res.cookie(
-      
       "refreshToken",
       result.refreshToken,
       {
@@ -160,7 +159,5 @@ class AuthController {
     });
   });
 }
-console.log("========== REFRESH ==========");
-console.log(req.cookies);
-console.log(req.cookies?.refreshToken);
+
 module.exports = new AuthController();
