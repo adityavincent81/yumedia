@@ -2,12 +2,12 @@
 
 "use client";
 
+import type { Media } from "@/types/media.types";
+
 import UserInfoPanel from "../panel/UserInfoPanel";
 
 import SharedMedia from "../panel/SharedMedia";
-
 import SharedFiles from "../panel/SharedFiles";
-
 import SharedLinks from "../panel/SharedLinks";
 
 interface ChatInfoPanelProps {
@@ -18,7 +18,7 @@ interface ChatInfoPanelProps {
 
     fullName: string;
 
-    avatar?: string;
+    avatar?: Media | null;
 
     bio?: string;
 
@@ -36,9 +36,7 @@ interface ChatInfoPanelProps {
   media?: {
     _id: string;
 
-    type:
-      | "image"
-      | "video";
+    type: "image" | "video";
 
     url: string;
   }[];
@@ -68,41 +66,27 @@ interface ChatInfoPanelProps {
 
 export default function ChatInfoPanel({
   user,
-
   media = [],
-
   files = [],
-
   links = [],
 }: ChatInfoPanelProps) {
   return (
     <aside
       className="
         h-full
-
         overflow-y-auto
-
         border-l
         border-zinc-800
-
         bg-zinc-950
       "
     >
-      <UserInfoPanel
-        user={user}
-      />
+      <UserInfoPanel user={user} />
 
-      <SharedMedia
-        media={media}
-      />
+      <SharedMedia media={media} />
 
-      <SharedFiles
-        files={files}
-      />
+      <SharedFiles files={files} />
 
-      <SharedLinks
-        links={links}
-      />
+      <SharedLinks links={links} />
     </aside>
   );
 }

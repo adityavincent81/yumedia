@@ -30,7 +30,7 @@ export default function ProfileAbout({
           </p>
 
           <p className="font-medium">
-            {user.faculty ||
+            {user.faculty ??
               "-"}
           </p>
         </div>
@@ -41,7 +41,7 @@ export default function ProfileAbout({
           </p>
 
           <p className="font-medium">
-            {user.major || "-"}
+            {user.major ?? "-"}
           </p>
         </div>
 
@@ -51,7 +51,7 @@ export default function ProfileAbout({
           </p>
 
           <p className="font-medium">
-            {user.batchYear ||
+            {user.batchYear ??
               "-"}
           </p>
         </div>
@@ -81,16 +81,18 @@ export default function ProfileAbout({
           </p>
 
           <p className="font-medium">
-            {new Date(
-              user.lastSeenAt
-            ).toLocaleDateString(
-              "id-ID",
-              {
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-              }
-            )}
+            {user.lastSeenAt
+              ? new Date(
+                  user.lastSeenAt
+                ).toLocaleDateString(
+                  "id-ID",
+                  {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                  }
+                )
+              : "-"}
           </p>
         </div>
       </div>

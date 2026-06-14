@@ -4,25 +4,20 @@ import Link from "next/link";
 
 import FollowButton from "./FollowButton";
 
+import type {
+  FollowUser,
+} from "@/features/follow/types/follow.types";
+
 interface FollowUserCardProps {
-  user: {
-    _id: string;
-    username: string;
-    fullName: string;
-
-    avatar?: {
-      url: string;
-    };
-
-    faculty?: string;
-    major?: string;
-    batchYear?: number;
-  };
+  user: FollowUser;
 }
 
 export default function FollowUserCard({
   user,
 }: FollowUserCardProps) {
+  const avatarUrl =
+    user.avatar?.url;
+
   return (
     <div className="flex items-center justify-between gap-4 rounded-xl border p-4">
       <Link
@@ -30,9 +25,9 @@ export default function FollowUserCard({
         className="flex min-w-0 flex-1 items-center gap-3"
       >
         <div className="h-12 w-12 overflow-hidden rounded-full border">
-          {user.avatar?.url ? (
+          {avatarUrl ? (
             <img
-              src={user.avatar.url}
+              src={avatarUrl}
               alt={user.fullName}
               className="h-full w-full object-cover"
             />
